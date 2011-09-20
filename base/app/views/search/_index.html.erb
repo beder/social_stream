@@ -1,0 +1,15 @@
+<%= location(link_to(t('search.global.name')))%>
+<br class="clearfloat" />
+<div class="space_center"></div>
+<h2><%= t('search.searching', :query => truncate(params[:search_query],:length => 45)) %></h2>
+<div class="space_center"></div>
+<%= render :partial => 'form' %> 
+<div class="space_center"></div>
+<div class="space_center"></div>
+<div id="search_results" class="block">  
+  <% unless params[:focus].present? %>
+    <%= render :partial => 'global_search' %>
+  <% else %>
+    <%= render :partial => 'focus_search' %>
+  <% end %>
+</div>
