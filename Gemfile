@@ -7,6 +7,9 @@ source "http://rubygems.org"
 # gem 'mailboxer', :path => '../mailboxer'
 # gem 'avatars_for_rails', :path => '../avatars_for_rails'
 
+# Temporary: we need to reference the latest thiking-sphinx from the rails3 branch
+gem 'thinking-sphinx', :git=>'https://github.com/freelancing-god/thinking-sphinx.git', :branch => "rails3"
+
 # social_stream gems
 %w(base documents).each do |g|
   gem "social_stream-#{ g }", :path => g

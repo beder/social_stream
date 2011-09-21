@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   # Modernizr.js javascript library
   s.add_runtime_dependency('modernizr-rails', '~> 2.0.6')
   # Sphinx search engine
-  # s.add_runtime_dependency('thinking-sphinx', '~> 2.0.7')
+  s.add_runtime_dependency('thinking-sphinx', '~> 2.0.7')
 
   # Development gem dependencies
   #
