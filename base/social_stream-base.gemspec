@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require File.join(File.dirname(__FILE__), 'lib', 'social_stream', 'base', 'version')
 
 Gem::Specification.new do |s|
@@ -50,6 +51,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('modernizr-rails', '~> 2.0.6')
   # Sphinx search engine
   s.add_runtime_dependency('thinking-sphinx', '~> 2.0.7')
+  #Syntactically Awesome Stylesheets
+  s.add_runtime_dependency('sass-rails', '~> 3.1.0')
 
   # Development gem dependencies
   #

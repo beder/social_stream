@@ -1,22 +1,16 @@
 <% total = 0 %>
 <ul>
-<% SocialStream.subjects.each do |subject_type| %>  
-    <% unless @search_result[subject_type].empty? %>
-      <li class="title">
-        <%= subject_type.to_s.capitalize.pluralize %>
-      </li>
-      <% @search_result[subject_type].each do |subject|%>
+    <% unless @search_result.empty? %>
+      <% @search_result.each do |model|%>
         <% total+=1 %>
-        <li class="subject_result"><%= subject_with_details subject %></li>
+        <li class="result"><%= model_with_details model %></li>
       <% end %>
     <% end %>    
   </li>
-<% end %>
-
   <%= link_to raw('<li class="more">' + 
-              t('search.global.query', :query => truncate(params[:search_query],:length => 20)) + 
-              '<br>' +
-              t('search.global.first_result.' + (total==1 ? 'one' : 'more'), 
-              :count => total.to_s) + '</li>'), 
+                  t("search.global.first_result.#{ total == 1 ? 'one' : 'more' }", :count => total) +
+                  '<br>' +
+                  t('search.global.query', :query => truncate(h(params[:search_query]),:length => 20)) + 
+                  '</li>'), 
               search_path(:search_query => params[:search_query]) %>
 </ul>

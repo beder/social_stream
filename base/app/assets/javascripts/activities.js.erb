@@ -7,8 +7,6 @@ $(function() {
   $('#new_<%= SocialStream.activity_forms.first %>').show();
   $('#select_<%= SocialStream.activity_forms.first %>').addClass('selected');
   $('#security').chosen();
-  $("#input_activities").Watermark("<%= I18n.t('activity.input') %>","#666");
-  $("#event_name").Watermark("<%= I18n.t('event.input') %>","#666");
 });
 
 
@@ -50,6 +48,7 @@ activate_anti_rebounds = function(){
     return true;    
   });
 }
+
 
 unblock_all_forms = function() {  
   //Sharing buttons
@@ -95,13 +94,17 @@ $(function() {
   	}
   });
   $(".activities_comment_btn").hide();
+  $(".actor_name_new_comment").hide();
+  $(".actor_logo_new_comment").hide();
   
   //if there are 4 or more commments we only show the last 2 and a link to show the rest
   $(".activity_comments").each(function(){
   	var comments = $(this).children(".subactivity");  	
   	//check if there are more than 3 comments
   	if (comments.size() > 3){
-  		$(this).prepend("<div class='hide_show_comments'><a href='#' onclick='showAllComments(\""+ $(this).attr('id') +"\"); return false;'><%= I18n.t('comment.view_all') %> (" + comments.size() + ")</a></div>");
+  		$(this).prepend("<div class='hide_show_comments'><a href='#' onclick='showAllComments(\""+ 
+  		                 $(this).attr('id') +"\"); return false;'><%= I18n.t('comment.view_all') %> (" + 
+  		                comments.size() + ")</a></div><div class='space_comments'></div>");
   		comments.slice(0,comments.size()-2).hide();
   		//hide alto space_comments
   		$(this).children(".space_comments").slice(0,comments.size()-2).hide();
@@ -116,10 +119,26 @@ showAllComments = function(id){
 };
 
 //usa livequery para usar el javascript luego de una accion con  AJAX
-$(".input_new_comments").live("click",function(){
+$(".input_new_comments").live("click", function(){
 	$(".activities_comment_btn").hide();
-	$(this).parent(".new_comment").children(".activities_comment_btn").show();
+	$(".new_comment").removeClass("new_comment_shown");
+	$(".actor_name_new_comment").hide();
+	$(".actor_logo_new_comment").hide();
+  var comment= $(this).parents(".activity_new_comment");
+  comment.find(".activities_comment_btn").show();
+  $(this).parents(".new_comment").addClass("new_comment_shown");
+  comment.find(".actor_name_new_comment").show();
+  comment.find(".actor_logo_new_comment").show();
+  return false;
 });
+
+autoSize= function(activity_dom_id) {
+  // Copy textarea contents; browser will calculate correct height of copy,
+  // which will make overall container taller, which will make textarea taller.
+  var text = $("#comment_text_"+activity_dom_id).val().replace(/\n/g, '<br/>');
+  $("#copy_comment_text_"+activity_dom_id).html(text);
+}  
+    
 
 //javascript for tocomment option
 $(".to_comment").live("click", function(){

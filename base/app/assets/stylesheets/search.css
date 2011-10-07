@@ -2,7 +2,7 @@
 /********************************* Header **************/
 #header_search {
   float: left;
-  padding: 1px 10px 0 10px;
+  padding: 1px 0 0 10px;
   z-index: 2001;
 }
 #header_search_input, #global_search_input {
@@ -14,7 +14,11 @@
 #header_search_input {
   border: solid 1px #dedede;
   height: 16px;
-  width: 150px;
+  width: 200px;
+}
+.banner_busqueda #header_search_input {
+  border: solid 1px #aaa;
+  height: 20px;
 }
 #global_search_input {
   border: solid 1px #aeaeae;
@@ -32,7 +36,7 @@
   overflow: hidden;
   position: absolute;
   z-index: 2000;
-  background: whiteSmoke;
+  background: #f5f5f5;
   text-align: left;
 }
 #header_search_display a {
@@ -49,7 +53,7 @@
   border-top: solid 1px #B9B9B9;
   font-size: 10px;
   height: 35px;
-  background: whiteSmoke;
+  background: #f5f5f5;
   overflow: hidden;
   text-align: center;
 }
@@ -75,7 +79,7 @@
 #header_search_display  li .link {
   display: none;
 }
-#header_search_display  li.subject_result {
+#header_search_display  li.result {
   padding: 0px;
   height: 45px;
   text-align: left;
@@ -107,12 +111,22 @@
 .search_row {
   text-align: center;
 }
-.subject_with_details {
+.model_with_details {
   padding: 5px;
 }
 .subject_search_results {
-  width: 280px;
+  width: 186px;
   text-align: center;
+}
+.subject_search_results img {
+  width: 48px;
+  height: 48px;
+}
+.subject_search_results .sub-block {
+  width: 62%;
+  word-wrap: break-word;
+  height: 50px;
+  overflow: hidden;
 }
 #search_results {
   text-align: center;
@@ -125,42 +139,8 @@
   float: right;
   padding: 0;
 }
-#search_results .title {
-  width: 540px;
-  margin: auto;
-  background-color: #E1EEF5;
-  padding: 5px;
-  font-weight: bold;
-  text-align: center;
-}
-#search_results .subject_search_results .title {
-  width: 260px;
-}
 /********************************* Form and errors *********/
 #search_form .error {
   display: none;
-}
-/********************************* Focus options ***********/
-#focus_options ul {
-  list-style: none;
-}
-#focus_options ul li {
-  line-height: 27px;
-  vertical-align: top;
-  display: inline;
-}
-#focus_options  li span:hover {
-  background: #CFDEFF;
-  color: #2A3890;
-}
-#focus_options ul li a:hover {
-  text-decoration: none;
-}
-#focus_options ul li span {
-  padding: 5px 10px;
-  background-color: #E1EEF5;
-}
-#focus_options ul li span.selected {
-  border: solid 1px #2A3890;
 }
 /******************** Search css END ***********************/

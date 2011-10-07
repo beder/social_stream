@@ -15,8 +15,6 @@ class Actor < ActiveRecord::Base
   include SocialStream::Models::Supertype
   include SocialStream::Models::Object
   
-  delegate :tag_list, :tag_list=, :tagged_with, :tag_counts, :to => :activity_object
-  
   validates_presence_of :name, :subject_type
   
   acts_as_messageable
@@ -159,7 +157,7 @@ class Actor < ActiveRecord::Base
         when String
           emails << receiver_emails
         when Array
-          receveir_emails.each do |receveir_email|
+          receiver_emails.each do |receiver_email|
             emails << receiver_email
           end
         end
@@ -198,25 +196,43 @@ class Actor < ActiveRecord::Base
   # Options:
   # * type: Filter by the class of the contacts.
   # * direction: sent or received
-  # * relations: Restrict the relations of considered ties. Defaults to {Relation::Custom relations of custom type}
+  # * relations: Restrict the relations of considered ties. In the case of both directions,
+  #   only relations belonging to {Actor} are valid. It defaults to relations of
+  #   {Relation::Custom custom} and {Relation::Public public} types
   # * include_self: False by default, don't include this actor as subject even they have ties with themselves.
+  # * load_subjects: True by default, make the queries for eager loading of contacts
   #
   def contact_actors(options = {})
     subject_types   = Array(options[:type] || self.class.subtypes)
     subject_classes = subject_types.map{ |s| s.to_s.classify }
     
     as = Actor.select("DISTINCT actors.*").
-               where('actors.subject_type' => subject_classes).
-               includes(subject_types)
+               where('actors.subject_type' => subject_classes)
+
+    if options[:load_subjects].nil? || options[:load_subjects]
+      as = as.includes(subject_types)
+    end
     
+    # Make another query for getting the actors in the other way
+    if options[:direction].blank?
+      rcv_opts = options.dup
+      rcv_opts[:direction] = :received
+      rcv_opts[:load_subjects] = false
+
+      sender_ids = contact_actors(rcv_opts).map(&:id)
+
+      as = as.where(:id => sender_ids)
+
+      options[:direction] = :sent
+    end
     
     case options[:direction]
-      when :sent
-        as = as.joins(:received_ties => :relation).merge(Contact.sent_by(self))
-      when :received
-        as = as.joins(:sent_ties => :relation).merge(Contact.received_by(self))
+    when :sent
+      as = as.joins(:received_ties => :relation).merge(Contact.sent_by(self))
+    when :received
+      as = as.joins(:sent_ties => :relation).merge(Contact.received_by(self))
     else
-      raise "contact actors in both directions are not supported yet"
+      raise "How do you get here?!"
     end
     
     if options[:include_self].blank?

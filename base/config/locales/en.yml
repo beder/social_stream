@@ -21,7 +21,6 @@ en:
       hidden: "Shared with spheres of %{audience}"
     confirm_delete: "Delete activity?"
     delete: "Delete"
-    input: "What are you doing?"
     last: "Last Activities"
     like: "I like"
     one: "Activity"
@@ -55,32 +54,10 @@ en:
       post:
         title:
           other_wall: "%{sender} → %{receiver}"
-  avatar:
-    crop_image: "Crop the uploaded image"
-    crop_submit: "Crop image"
-    destroy: "Delete"
-    destroy_sure: "Are you sure you wan't to delete the selected avatar?"
-    error:
-      no_file: "You have to select a file"
-      no_image_file: "The file you uploaded isn't valid, it must be an image file"
-    list: "You have these avatars"
-    new: "Create a new avatar"
-    new_short: "New avatar"
-    no_avatars: "You haven't got any avatar, plesase create a new one."
-    one: "Avatar"
-    other: "Avatars"
-    original: "Original image"
-    preview: "Preview"
-    profile_change: "Change your avatar"
-    set_default: "Set as default"
-    set_default_sure: "Are you sure you wan't to set this avatar as default?"
-    text:
-      new: "... or upload a new one"
-      use: "Use your saved avatars ..."
-    upload: "Upload"
   browse: "Browse"
   button:
     cancel: "Cancel"
+    create: "Create"
     save: "Save"
     update: "Update"
   cleditor:
@@ -91,7 +68,9 @@ en:
     view_all: "View all comments"
   contact:
     all_n: "All contacts (%{count})"
+    confirm_delete: "Delete contact?"
     current: "Current"
+    delete: "Delete"
     edit:
       title: "Edit contact to %{name}"
       submit: "Edit contact"
@@ -126,7 +105,6 @@ en:
     type:
       new: "+ New type"
   copyright: "2010 Copyright - All rights reserved"
-  days: Days
   delete:
     confirm: Delete %{element}}?
   devise:
@@ -149,19 +127,19 @@ en:
       comments: "Comments"
       networks: "Social Networks"
       organizers: "Organizers"
-      participants: "Participants"
+      participants: "Video conferences"
       groups: "Groups"
       tags: "Tags"
-    main_title: "SocialStream is a core for building social network websites."
+    main_title: "Social Stream is a core for building social network websites."
     meet:
       default: "Meet"
       sentence1: "Meet interesting people and groups"
+      sentence2: "Find last activity of your contacts"
     share:
       default: "Share"
-      sentence1: "Your contacts and relations"
-      sentence2: "Posts, comments and activities"
+      sentence1: "Your proyects and activities"
+      sentence2: "Posts, photos, audio and videos"
     stats: "%{users} users and %{groups} groups registered"
-  find: "Find"
   group:
     one: "Group"
     other: "Groups"
@@ -194,10 +172,10 @@ en:
     one: "Inbox"
   invitation:
     e-mails: "E-mail addresses"
-    error: "Your request was unprocessable"
-    invited: " has invited you to SocialStream!"
-    join: "Invite other people to join SocialStream!"
-    join_me: "Join me at SocialStream!"
+    error: "Your request was unprocessable. Make sure you wrote correct e-mail addresses."
+    invited: "%{sender} has invited you to %{site}!"
+    join: "Invite other people to join %{site}!"
+    join_me: "Join me at %{site}!"
     one: "Invitation"
     other: "Invitations"
     toolbar: "Invite"
@@ -245,7 +223,10 @@ en:
     confirm_delete: "Delete post?"
     form:
       title: "Post"
+    input: "What are you doing?"
     title: "Posts"  
+  preposition:
+    and: "and"
   profile:
     one: "Profile"
     age: "Age"
@@ -282,12 +263,6 @@ en:
       success: "Your profile has been updated"     
   public:
     other: "Everybody"
-  representation:
-    action: "as"
-    change: "Change"
-  service:
-    one: "Service"
-    other: "Services"
   permission:
     description:
       brief:
@@ -317,9 +292,6 @@ en:
       add: "Add"
       title: "Privacy rules"
       saved: "Privacy rules saved"
-  products:
-    one: "Product"
-    other: "Products"
   relation_custom:
     choose: "1. Choose sphere"
     confirm_delete: "Delete this sphere?"
@@ -331,9 +303,7 @@ en:
     name: "Public"
   required: "(*) These fields are required"
   search:
-    actor:
-      none: "Nothing found"
-    all_subject_results: "Search all %{subject} (%{count})"
+    all_results: "Search all %{subject} (%{count})"
     at_least: "Write at least two characters"
     global: 
       name: "Global search"
@@ -343,6 +313,7 @@ en:
       query: "See more results for %{query} >"
     name: "Search"
     no_subject_found: "No %{subject} was found."
+    nothing: "Nothing found"
     searching: "Searching: %{query}"
     show_all: "Show all results"
     write: "Write your query ..."
@@ -350,7 +321,11 @@ en:
   settings:
     error: "Some errors raised when saving your changes"
     for: "Settings for"
-    main: "Main settings"
+    main: "Settings"
+    manage:
+      name: "Admin Contacs"
+      briefing: "Settings contacts preferences"
+      explanation: "Change contacts permissions"
     one: "Settings"
     success: "Your settings where correctly changed"
     api_key:
@@ -371,7 +346,8 @@ en:
   sign_in: "Sign in"
   sign_out: "Sign out"
   sign_up: "Sign up"
-  socialstream: "SocialStream"
+  site:
+    name: "Social Stream"
   subject:
     this_is_you: "This is you!"
   sure: "Are you sure?"
@@ -383,5 +359,4 @@ en:
     other: "Users"
     all: "All users"
     all_n: "All users (%{count})"
-  welcome: "Welcome to SocialStream!"
-
+  welcome: "Welcome to %{site}!"

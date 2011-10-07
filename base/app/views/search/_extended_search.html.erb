@@ -1,0 +1,14 @@
+<% if @search_result.empty? %>
+<div class="model_with_details">
+  <%= I18n.t('search.nothing') %>
+</div>
+<% else %>
+<% total = 0 %>
+<% @search_result.each do |model|%>
+<div class="subject_search_results block left">
+  <%= model_with_details model %>
+</div>
+<% end %>
+<br class="clearfloat">
+<%= paginate @search_result %>
+<% end %> 

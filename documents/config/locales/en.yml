@@ -5,13 +5,7 @@ en:
     mine: "My audios"
     msg: "Uploaded an audio:"
     not_mine: "Audios"
-  conference:
-    all: "All conferences"
-    confirm_delete: "Delete conference?"
-    title: "Conferences"
-    mine: "My conferences"
-    msg: "Uploaded a conference:"
-    not_mine: "Conferences"
+    processing: "Processing audio clip"
   document:
     all: "All documents"  
     confirm_delete: "Delete document?"
@@ -41,3 +35,4 @@ en:
     mine: "My videos"  
     msg: "Uploaded a video:" 
     not_mine: "Videos"
+    processing: "Processing video"

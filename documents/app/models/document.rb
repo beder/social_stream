@@ -13,6 +13,17 @@ class Document < ActiveRecord::Base
   
   validates_attachment_presence :file
   
+  define_index do
+    indexes title
+    indexes file_file_name, :as => :file_name
+    indexes description
+    indexes activity_object.tags.name, :as => :tags
+    
+    where "type IS NULL"
+    
+    has created_at
+  end
+  
   class << self 
     def new(*args)
       if !(self.name == "Document")

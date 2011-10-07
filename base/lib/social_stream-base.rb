@@ -37,6 +37,8 @@ require 'simple-navigation'
 require 'modernizr-rails'
 # Sphinx search engine
 require 'thinking-sphinx'
+# Syntactically Awesome Stylesheets
+require 'sass-rails'
 
 # Provides your Rails application with social network and activity stream support
 module SocialStream
@@ -45,7 +47,6 @@ module SocialStream
   autoload :Populate,  'social_stream/populate'
   autoload :Relations, 'social_stream/relations'
   autoload :TestHelpers, 'social_stream/test_helpers'
-  autoload :ToolbarConfig, 'social_stream/toolbar_config'
 
   module Controllers
     autoload :Helpers, 'social_stream/controllers/helpers'
@@ -61,6 +62,10 @@ module SocialStream
     autoload :Controllers, 'social_stream/test_helpers/controllers'
   end
 
+  module ToolbarConfig
+    autoload :Base, 'social_stream/toolbar_config/base'
+  end
+
   mattr_accessor :subjects
   @@subjects = [ :user, :group ]
 
@@ -73,6 +78,12 @@ module SocialStream
 
   mattr_accessor :activity_forms
   @@activity_forms = [ :post, :group ]
+  
+  mattr_accessor :quick_search_models
+  @@quick_search_models = [ :user, :group ]
+  
+  mattr_accessor :extended_search_models
+  @@extended_search_models = [ :user, :group ]
   
   class << self
     def setup

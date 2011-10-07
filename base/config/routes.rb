@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   #Background tasks
-  mount Resque::Server, :at => "/resque"
+  resque_constraint = lambda do |request|
+    #request.env['warden'].authenticate? and request.env['warden'].user.admin?
+    true
+  end
+
+  constraints resque_constraint do
+    mount Resque::Server, :at => "/resque"
+  end
   
   root :to => "frontpage#index"
   
@@ -12,6 +19,9 @@ Rails.application.routes.draw do
   match 'api/user/:id' => 'api#users'
   match 'api/me' => 'api#users'
   match 'api/me/home/' => 'api#activity_atom_feed', :format => 'atom', :as => :api_my_home
+  match 'api/me/contacts' => 'contacts#index', :format => 'json'
+  match 'api/subjects/:s/contacts' => 'contacts#index', :format => 'json'
+  match 'api/user/:id/public' => 'api#activity_atom_feed', :format => 'atom'
   match 'api/user/:id/public' => 'api#activity_atom_feed', :format => 'atom'
   ##/API##
   
@@ -27,7 +37,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contacts
+  resources :contacts do
+    collection do
+      get 'pending'
+    end
+  end
 
   namespace "relation" do
     resources :customs

@@ -1,4 +1,7 @@
 module ToolbarHelper
+  # Configuration of toolbar items
+  include SocialStream::ToolbarConfig
+
   # Define the toolbar content for your view. There are two typical cases, depending on the value of
   # options[:profile]
   # * If present, render the profile menu for the {SocialStream::Models::Subject subject}
@@ -13,7 +16,8 @@ module ToolbarHelper
   # For example, the messages menu when you are looking your inbox. This is done through :option element.
   #
   # To get it working, you should use the proper :option to be expanded, ":option => :messages" in the
-  # mentioned example. This will try, automatically, to expand the section of the menu where its root
+  # mentioned example. This will try
+      # Base toolbar items, automatically, to expand the section of the menu where its root
   # list link, the one expanding the section, has an id equal to "#messages_menu". If you use
   # ":options => :contacts" it will try to expand "#contacts_menu".
   #
@@ -46,6 +50,8 @@ module ToolbarHelper
     content = capture do
       if options[:profile]
         render :partial => 'toolbar/profile', :locals => { :subject => options[:profile] }
+      elsif options[:option].present? and options[:option].to_s.eql? 'messages'
+        render :partial => 'toolbar/messages'
       else
         render :partial => 'toolbar/home'
       end
@@ -82,21 +88,22 @@ module ToolbarHelper
 
   #Prints the home toolbar menu.
   def home_toolbar_menu
-    default_home_toolbar_menu
+    render_items home_toolbar_items
   end
 
-  #Prints the home profile menu.
+  #Prints the profile toolbar menu.
   def profile_toolbar_menu(subject=current_subject)
-    default_profile_toolbar_menu(subject)
+    render_items profile_toolbar_items(subject)
+  end
+
+  #Prints the messages toolbar menu.
+  def messages_toolbar_menu
+    render_items messages_toolbar_items
   end
  
-
   #Renders array of navigation items with simple_navigation
   def render_items(items)
     menu = render_navigation :items => items
     return raw menu
   end
-  
-  
-  include SocialStream::ToolbarConfig
 end

@@ -7,9 +7,7 @@ module ContactsHelper
     if c.reflexive?
       t('subject.this_is_you')
     else
-      link_to c.status,
-              edit_contact_path(c),
-              :title => t("contact.#{ c.action }.title", :name => c.receiver.name)
+      render :partial => 'contacts/link', :locals => { :contact => c }
     end
 
   end

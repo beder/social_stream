@@ -3,13 +3,10 @@
 <div class="space_center"></div>
 <h2><%= t('search.name') %></h2>
 <div class="space_center"></div>
+<div id="search_form_div">
 <%= render :partial => 'form' %> 
-<div class="space_center"></div>
+</div>
 <div class="space_center"></div>
 <div id="search_results" class="block">  
-  <% unless params[:focus].present? %>
-    <%= render :partial => 'global_search' %>
-  <% else %>
-    <%= render :partial => 'focus_search' %>
-  <% end %>
+    <%= render :partial => 'extended_search' %>
 </div>
