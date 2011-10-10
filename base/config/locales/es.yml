@@ -15,6 +15,14 @@ es:
       new: "Nueva contraseña"
       retype: "Repetir nueva contraseña"
     privacy: "Privacidad"
+  activerecord:
+    attributes:
+      user:
+        email: "Correo"
+        name: "Nombre"
+        password: "Contraseña"
+        password_confirmation: "Confirmar contraseña"
+        remember_me: "Recuérdame"
   activity:
     audience:
       visible: "Compartido con %{audience}"
@@ -59,8 +67,6 @@ es:
     cancel: "Cancelar"
     save: "Guardar"
     update: "Actualizar"
-  cleditor:
-    controls: "negrita cursiva subrayado tachado subíndice superíndice | tamaño estilo | lista | imagen enlazar desenlazar"
   comment:
     input: "Comentar..."
     confirm_delete: "¿Borrar commentario?"
@@ -107,6 +113,13 @@ es:
   delete:
     confirm: "¿Borrar %{element}}?"
   devise:
+    links:
+      sign_in: "Entrar"
+      sign_up: "Registrarse"
+      forgot_password: "¿Olvidaste tu contraseña?"
+      confirmation_instructions: "¿No recibiste instrucciones de confirmación?"
+      unlock_instructions: "¿No recibiste instrucciones de desbloqueo?"
+      sign_in_with: "Entrar con %{provider}"
     passwords:
       confirm: "Confirmar contraseña"
       forgot: "¿Olvidaste tu contraseña?"
@@ -121,11 +134,9 @@ es:
     collaborate:
       default: "Colabora"
       sentence1: "Organice sus proyectos y actividades"
-      sentence2: "Participe en conferencias y eventos"
-      sentence3: "Cree su propio espacio y conferencias"
+      sentence2: "Crea tus propios grupos"
     elements:
       comments: "Comentarios"
-      conferences: "Conferencias"
       networks: "Redes sociales"
       organizers: "Organizadores"
       participants: "Participantes"
@@ -134,14 +145,12 @@ es:
     main_title: "Social Stream es un núcleo para construir webs con características de red social"
     meet:
       default: "Encuentra"
-      sentence1: "Descubra las mejores videoconferencias online"
-      sentence2: "Conozca gente y grupos interesantes"
-      sentence3: "Videoconferencia con sus colegas"
+      sentence1: "Descubre grupos y gente interesante"
+      sentence2: "Encuentra la última actividad de tus contactos"
     share:
       default: "Comparte"
-      sentence1: "Grabaci\xC3\xB3n y streaming de videoconferencias"
-      sentence2: "Publicaciones, comentarios, documentos, fotos, audios y vídeos"
-      sentence3: "Sus contactos y relaciones"
+      sentence1: "Tus proyectos y actividades"
+      sentence2: "Comentarios, fotos, audio y vídeo"
     stats: "%{users} personas and %{groups} grupos registrados"
   group:
     one: "Grupo"

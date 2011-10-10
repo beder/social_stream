@@ -15,6 +15,14 @@ en:
       new: "New password"
       retype: "Retype new password"
     privacy: "Privacy"
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        name: "Name"
+        password: "Password"
+        password_confirmation: "Confirm password"
+        remember_me: "Remember me"
   activity:
     audience:
       visible: "Shared with %{audience}"
@@ -60,8 +68,6 @@ en:
     create: "Create"
     save: "Save"
     update: "Update"
-  cleditor:
-    controls: "bold italic underline strikethrough subscript superscript | size style | bullets | image link unlink"
   comment:
     input: "Write a comment..."
     confirm_delete: "Delete comment?"
@@ -108,6 +114,13 @@ en:
   delete:
     confirm: Delete %{element}}?
   devise:
+    links:
+      sign_in: "Sign in"
+      sign_up: "Sign up"
+      forgot_password: "Forgot you password?"
+      confirmation_instructions: "Didn't receive confirmation instructions?"
+      unlock_instructions: "Didn't receive unlock instructions?"
+      sign_in_with: "Sign in with %{provider}"
     passwords:
       confirm: "Confirm password"
       forgot: "Forgot your password?"
@@ -135,14 +148,12 @@ en:
     main_title: "Social Stream is a core for building social network websites."
     meet:
       default: "Meet"
-      sentence1: "Discover best online videoconferences"
-      sentence2: "Meet interesting people and groups"
-      sentence3: "Video chat with your colleagues"
+      sentence1: "Meet interesting people and groups"
+      sentence2: "Find last activity of your contacts"
     share:
       default: "Share"
-      sentence1: "Videoconference recording and streaming"
-      sentence2: "Posts, comments, documents, photos, audios and videos"
-      sentence3: "Your contacts and relations"
+      sentence1: "Your proyects and activities"
+      sentence2: "Posts, photos, audio and videos"
     stats: "%{users} users and %{groups} groups registered"
   group:
     one: "Group"

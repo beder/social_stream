@@ -108,7 +108,13 @@
 }
 .subject_search_results {
   width: 186px;
-  height: 61px;
+  height: 81px;
+  overflow: hidden;
+  text-align: center;
+}
+.subject_search_results.post {
+  width: 560px;
+  height: 100%;
   overflow: hidden;
   text-align: center;
 }
