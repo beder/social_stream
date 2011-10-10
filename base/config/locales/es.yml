@@ -147,6 +147,7 @@ es:
       default: "Encuentra"
       sentence1: "Descubre grupos y gente interesante"
       sentence2: "Encuentra la última actividad de tus contactos"
+    register: "¡Inscríbete ahora!"
     share:
       default: "Comparte"
       sentence1: "Tus proyectos y actividades"
@@ -202,6 +203,10 @@ es:
     base: "Estás aquí"
     separator: " > "
   mailboxer:
+    form:
+      body: "Mensaje"
+      recipients: "Para"
+      subject: "Asunto"
     message_mailer:
       subject_new: "%{subject}"
       subject_reply: "%{subject}"
