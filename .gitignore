@@ -12,4 +12,5 @@ lib/generators/social_stream/templates/public/images/tmp/
 **.*swp
 .rvmrc
 spec/dummy/documents/pictures/*
+spec/dummy/documents/documents/*
 .code_swarm

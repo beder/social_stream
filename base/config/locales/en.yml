@@ -25,14 +25,25 @@ en:
         remember_me: "Remember me"
   activity:
     audience:
-      visible: "Shared with %{audience}"
-      hidden: "Shared with spheres of %{audience}"
+      hidden:
+        summary: "Restricted"
+        full: "Shared with contacts of %{audience}"
+      public:
+        summary: "Public"
+        full: "Shared with all the Internet"
+      visible:
+        summary: "Restricted"
+        full: "Shared with %{audience}"
     confirm_delete: "Delete activity?"
     delete: "Delete"
     last: "Last Activities"
     like: "I like"
     one: "Activity"
     other: "Activities"
+    privacy:
+      contacts:
+        user: "Contacts of %{receiver}"
+        group: "Members of %{receiver}"
     sending: "Sending"
     title: "Activities"
     to_comment: "Comment"
