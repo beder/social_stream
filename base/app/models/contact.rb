@@ -63,8 +63,8 @@ class Contact < ActiveRecord::Base
     end
   }
 
-
   validates_presence_of :sender_id, :receiver_id
+  validates_presence_of :relation_ids, :on => :update
   validates_uniqueness_of :sender_id, :scope => :receiver_id
   validates_uniqueness_of :receiver_id, :scope => :sender_id
 
@@ -181,7 +181,8 @@ class Contact < ActiveRecord::Base
   end
 
   def set_inverse
-    inverse = Contact.sent_by(receiver_id).received_by(sender_id).first
+    
+    inverse = self.class.sent_by(receiver_id).received_by(sender_id).first
 
     return if inverse.blank?
 
