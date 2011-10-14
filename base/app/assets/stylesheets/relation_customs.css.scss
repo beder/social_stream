@@ -33,8 +33,9 @@ span.ui-radio-state-checked-hover {
 	background-position: 0 -200px;
 }
 
-#relation_customs input {
+#relation_customs input, #relation_customs button{
 	float: left;
+	padding: 3px 10px 3px 10px;
 }
 
 #relation_customs span {
@@ -193,6 +194,7 @@ span.privacy_span_new {
 #relation_custom_permissions_input ol li{
 	font-family: sans-serif;
 	padding: 5px 0px 5px 0px;
+	display: block;
 }
 
 #relation_custom_permissions_input label {

@@ -3,18 +3,15 @@ class ContactsController < ApplicationController
   before_filter :exclude_reflexive, :except => [ :index, :pending ]
 
   def index
-    @unfiltered_contacts = 
+    @contacts =
       Contact.sent_by(current_subject).
               joins(:receiver).merge(Actor.alphabetic).
-              not_rejected.
-              active
-    
-    @contacts =
-      @unfiltered_contacts.
               merge(Actor.letter(params[:letter])).
               merge(Actor.name_search(params[:search])).
-              related_by_param(params[:relation])
-
+              related_by_param(params[:relation]).
+              positive.
+              select("actors.name")
+              
     respond_to do |format|
       format.html { @contacts = @contacts.page(params[:page]).per(10) }
       format.js { @contacts = @contacts.page(params[:page]).per(10) }
