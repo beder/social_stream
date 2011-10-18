@@ -19,6 +19,8 @@ es:
     attributes:
       contact:
         relation_ids: "El tipo de contacto"
+      relation/custom:
+        name: "Nombre"
       user:
         email: "Correo"
         name: "Nombre"
@@ -43,9 +45,14 @@ es:
     one: "Actividad"
     other: "Actividades"
     privacy:
-      contacts:
-        user: "Todos los contactos"
-        group: "Todos los miembros"
+      myself:
+        contacts:
+          group: "Todos los integrantes"
+          user: "Tus contactos"
+      outside:
+        contacts:
+          group: "Integrantes de %{receiver}"
+          user: "Contactos de %{receiver}"
     sending: "Enviando"
     title: "Actividades"
     to_comment: "Comentar"
@@ -130,7 +137,7 @@ es:
     confirm: "¿Borrar %{element}}?"
   devise:
     links:
-      sign_in: "Entrar"
+      sign_in: "Ingresar"
       sign_up: "Registrarse"
       forgot_password: "¿Olvidaste tu contraseña?"
       confirmation_instructions: "¿No recibiste instrucciones de confirmación?"
@@ -359,6 +366,8 @@ es:
     title: "Privacidad y contexto"
   relation_public:
     name: "Público"
+  representation:
+    switch: "Cambiar sessión"
   required: "(*) Estos campos son obligatorios"
   search:
     all_subject_results: "Ver todos %{subject} (%{count})"
@@ -407,7 +416,7 @@ es:
       briefing: "Cambia tu contraseña"
     success: "Ajustes guardados con éxito"
   share: "Compartir"
-  sign_in: "Entrar"
+  sign_in: "Ingresar"
   sign_out: "Salir"
   sign_up: "Registrarse"
   site:

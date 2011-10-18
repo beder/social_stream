@@ -28,27 +28,32 @@ module SocialStream
             password= SocialStream::Presence.password
             #SS Username
             ss_name = SocialStream::Presence.social_stream_presence_username
+            ss_sid = ss_name + "@" + domain
               
             user_sid = self.sender.slug + "@" + domain
+            user_name =  self.sender.name  
             buddy_sid = self.receiver.slug + "@" + domain
             buddy_name =  self.receiver.name
-              
-            #Check Subscription_type
-            if isBidirectionalTie
-              sType = "both"
-            else
-              sType = "from"
-            end 
+            
             
             begin
-              ss_sid = ss_name + "@" + domain
               client = Jabber::Client.new(Jabber::JID.new(ss_sid))
               client.connect
               client.auth(password)
    
-              #Sending a message
-              #AddItemToRoster[UserSID,BuddySID,BuddyName,Subscription_type]
-              msg = Jabber::Message::new(ss_sid, "AddItemToRoster&" + user_sid + "&" + buddy_sid + "&" + buddy_name + "&" + sType)
+              #Check if is a positive and replied tie         
+              if self.bidirectional?
+                #SetRosterForBidirectionalTie[UserASID,UserBSID,UserAName,UserBName]
+                msg = Jabber::Message::new(ss_sid, "SetRosterForBidirectionalTie&" + user_sid + "&" + buddy_sid + "&" + buddy_name + "&" + user_name) 
+              elsif self.positive?
+                #Case: Possitive tie unidirectional
+                sType = "from"
+                #AddItemToRoster[UserSID,BuddySID,BuddyName,Subscription_type]
+                msg = Jabber::Message::new(ss_sid, "AddItemToRoster&" + user_sid + "&" + buddy_sid + "&" + buddy_name + "&" + sType)
+              else
+                return  
+              end
+
               msg.type=:chat
               client.send(msg)
               client.close()
@@ -62,10 +67,6 @@ module SocialStream
               end
             end   
             
-          end
-          
-          def isBidirectionalTie
-            return true
           end
           
         end

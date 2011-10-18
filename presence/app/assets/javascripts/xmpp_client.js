@@ -3,7 +3,7 @@
 ////////////////////
 
 function log(msg) {
-    console.log(msg)
+    //console.log(msg)
 }
 
 
@@ -155,6 +155,7 @@ function onMessage(msg) {
 
 
 function onPresence(presence) {
+	    //log(presence);
 		  from = $(presence).attr('from');
 		  slug = from.split("@")[0];
 		  if(slug != user_slug){
@@ -240,10 +241,11 @@ function initAndPlaySound(sound){
 //Chat view jquery
 ////////////////////
 
-$(document).ready(function () {
-		initialTimer = setTimeout("updateChatWindow()", 15000);
-		initAudio();
-});
+function initDelegates(){
+  $('.user_presence').delegate( '.user_presence a[title]', 'hover', function(){ 
+    e.preventDefault();
+  });
+}
 
 function setUserFunctions(){
 	
@@ -257,7 +259,6 @@ function setUserFunctions(){
 	    window[guest_slug].chatbox("option", "boxManager").toggleBox(true);
 	  };
 	});
-	
 	
 	//JQuery DropdwanStatus
 	
@@ -330,7 +331,8 @@ function refreshChatWindow(){
 function updateChatWindow(){
 	timerCounter=0;
 	log("updateChatWindow()");
-  $.post("/chatWindow", { userConnected: userConnected }, function(data){ 
+  $.post("/chatWindow", { userConnected: userConnected }, function(data){
+			$(".tooltip").hide() //Prevent tooltips
       $("#chat_partial").html(data);
       if (userConnected) {
         $(".user_presence a[title]").tooltip();

@@ -19,6 +19,8 @@ en:
     attributes:
       contact:
         relation_ids: "Contact type"
+      relation/custom:
+        name: "Name"
       user:
         email: "Email"
         name: "Name"
@@ -43,9 +45,14 @@ en:
     one: "Activity"
     other: "Activities"
     privacy:
-      contacts:
-        user: "All contacts"
-        group: "All members"
+      myself:
+        contacts:
+          group: "All members"
+          user: "Your contacts"
+      outside:
+        contacts:
+          group: "Members of %{receiver}"
+          user: "Contacts of %{receiver}"
     sending: "Sending"
     title: "Activities"
     to_comment: "Comment"
@@ -364,6 +371,8 @@ en:
     title: "Privacy & context"
   relation_public:
     name: "Public"
+  representation:
+    switch: "Switch session"
   required: "(*) These fields are required"
   search:
     all_results: "Search all %{subject} (%{count})"
