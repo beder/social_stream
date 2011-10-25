@@ -1,5 +1,5 @@
 module Socialstream
   module Presence
-    VERSION = "0.0.5"
+    VERSION = "0.0.9"
   end
 end

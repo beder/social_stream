@@ -1,4 +1,6 @@
 class GroupsController < InheritedResources::Base
+  before_filter :authenticate_user!, :except => [ :index, :show ]
+
   # Set group founder to current_subject
   # Must do before authorization
   before_filter :set_founder, :only => :new
@@ -29,6 +31,15 @@ class GroupsController < InheritedResources::Base
     end
   end
 
+  def destroy
+    destroy! do |success, failure|
+      success.html {
+        self.current_subject = current_user
+        redirect_to :home
+      }
+    end
+  end
+
   protected
 
   # Overwrite resource method to support slug
@@ -40,8 +51,6 @@ class GroupsController < InheritedResources::Base
   private
 
   def set_founder
-    return unless user_signed_in?
-
     params[:group]               ||= {}
     params[:group][:_contact_id] ||= current_subject.ego_contact.id
   end

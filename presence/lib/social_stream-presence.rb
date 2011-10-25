@@ -12,7 +12,9 @@ module SocialStream
     mattr_accessor :password
     mattr_accessor :xmpp_server_password
     mattr_accessor :social_stream_presence_username
-
+    mattr_accessor :enable
+    @@enable = true
+    
     class << self
       def setup
         yield self

@@ -170,7 +170,7 @@ es:
       default: "Encuentra"
       sentence1: "Descubre grupos y gente interesante"
       sentence2: "Encuentra la última actividad de tus contactos"
-    register: "¡Inscríbete ahora!"
+    register: "¡Regístrate ahora!"
     share:
       default: "Comparte"
       sentence1: "Tus proyectos y actividades"
@@ -182,6 +182,11 @@ es:
     all: "Todos los grupos"
     all_n: "Todos los grupos (%{count})"
     by: "Por grupos"
+    destroy:
+      one: "Destruir grupo"
+      explanation: "¡Todas las actividades, información y contactos de este grupo serán destruídos!"
+      go_ahead: "Sí, estoy seguro/a. ¡Adelante!"
+      last_confirm: "Es tu última oportunidad. ¿Realmente estás seguro/a?"
     form:
       title: "Grupo"
     input: "¿Cuál es el nombre del grupo?"
@@ -367,6 +372,7 @@ es:
   relation_public:
     name: "Público"
   representation:
+    notice: "Tu sesión ha cambiado. Ahora actúas en nombre de %{subject}. Para regresar a tu sessión, utiliza el menú de arriba a la derecha"
     switch: "Cambiar sessión"
   required: "(*) Estos campos son obligatorios"
   search:
