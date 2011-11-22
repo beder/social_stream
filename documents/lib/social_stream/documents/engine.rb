@@ -34,7 +34,7 @@ module SocialStream
         Mime::Type.register "video/x-flv", :flv
       end
 
-      initializer "social_stream-documents.toolbar_config" do
+      initializer "social_stream-documents.toolbar_config", :after=>"social_stream-base.toolbar_config" do
         SocialStream::ToolbarConfig.module_eval do
           include SocialStream::ToolbarConfig::Documents
         end
