@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   # SQL foreign keys
   s.add_runtime_dependency('foreigner', '~> 0.9.1')
   # Authentication
-  s.add_runtime_dependency('devise', '~> 1.4.5')
+  s.add_runtime_dependency('devise', '~> 2.2.3')
   # CRUD controllers
   s.add_runtime_dependency('inherited_resources', '~> 1.3.0')
   # Slug generation
@@ -33,16 +33,16 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('cancan', '~> 1.6.4')
   # Pagination
   s.add_runtime_dependency('kaminari', '~> 0.12.4')
-  # OAuth client
-  s.add_runtime_dependency('omniauth','~> 0.2.6')
-  # OAuth provider
-  s.add_runtime_dependency('oauth-plugin','~> 0.4.0.pre1')	
+  # OAuth client Facebook
+  s.add_runtime_dependency('omniauth-facebook','~> 1.4.1')
+  # OAuth client Facebook
+  s.add_runtime_dependency('omniauth-twitter','~> 1.0.0')
   # Messages
   s.add_runtime_dependency('mailboxer','~> 0.5.4')
   # Tagging
   s.add_runtime_dependency('acts-as-taggable-on','~> 2.0.6')
   # HTML Forms
-  s.add_runtime_dependency('formtastic','~> 1.2.3')
+  s.add_runtime_dependency('formtastic','~> 2.0.0')
   # Simple navigation for menu
   s.add_runtime_dependency('simple-navigation')
   # Background jobs
