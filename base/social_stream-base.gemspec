@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
   # Runtime gem dependencies
   #
   # Rails
-  s.add_runtime_dependency('rails', '>= 3.1.0')
+  s.add_runtime_dependency('rails', '= 3.2.17')
+
   # Activity and Relation hierarchies
   s.add_runtime_dependency('ancestry', '~> 1.2.3')
   # SQL foreign keys
@@ -32,7 +33,7 @@ Gem::Specification.new do |s|
   # Authorization
   s.add_runtime_dependency('cancan', '~> 1.6.4')
   # Pagination
-  s.add_runtime_dependency('kaminari', '~> 0.12.4')
+  s.add_runtime_dependency('kaminari', '~> 0.15.1')
   # OAuth client Facebook
   s.add_runtime_dependency('omniauth-facebook','~> 1.4.1')
   # OAuth client Facebook
@@ -52,12 +53,12 @@ Gem::Specification.new do |s|
   # Sphinx search engine
   s.add_runtime_dependency('thinking-sphinx', '~> 2.0.8')
   #Syntactically Awesome Stylesheets
-  s.add_runtime_dependency('sass-rails', '~> 3.1.0')
+  s.add_runtime_dependency('sass-rails', '~> 3.2.6')
 
   # Development gem dependencies
   #
   # Integration testing
-  s.add_development_dependency('capybara', '~> 0.3.9')
+  s.add_development_dependency('capybara', '~> 0.4.1.2')
   # Testing database
   s.add_development_dependency('sqlite3-ruby')
   # Debugging
@@ -67,7 +68,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency('ruby-debug19')
   end
   # Specs
-  s.add_development_dependency('rspec-rails', '~> 2.6.1')
+  s.add_development_dependency('rspec-rails', '~> 2.14.1')
   # Fixtures
   s.add_development_dependency('factory_girl', '~> 1.3.2')
   # Population

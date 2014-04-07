@@ -30,7 +30,6 @@ module SocialStream
         end
       end
 
-      module InstanceMethods
         def activity_object!
           activity_object || build_activity_object(:object_type => self.class.to_s)
         end
@@ -122,7 +121,6 @@ module SocialStream
 
           a.save!
         end
-      end
     end
   end
 end

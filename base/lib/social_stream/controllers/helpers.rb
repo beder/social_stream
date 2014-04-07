@@ -30,7 +30,6 @@ module SocialStream
         end
       end
 
-      module InstanceMethods
         # Current subject represented by the user. Defaults to the own user
         def current_subject
           @current_subject ||=
@@ -118,7 +117,6 @@ module SocialStream
 
           session[:subject_type].constantize.find session[:subject_id]
         end
-      end
     end
   end
 end

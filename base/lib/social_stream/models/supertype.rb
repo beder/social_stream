@@ -24,14 +24,12 @@ module SocialStream #:nodoc:
         end
       end 
 
-      module InstanceMethods
         def subtype_instance
           if __send__("#{ self.class.subtypes_name }_type").present?      # if object_type.present?
             object_class = __send__("#{ self.class.subtypes_name }_type") #   object_class = object_type # => "Video"
             __send__ object_class.constantize.base_class.to_s.underscore  #   __send__ "document"
                        end                                                # end
         end
-      end
     end
   end
 end

@@ -81,7 +81,6 @@ module SocialStream
         end
       end
       
-      module InstanceMethods
         def actor!
           actor || build_actor(:subject_type => self.class.to_s)
         end
@@ -105,7 +104,6 @@ module SocialStream
         def respond_to? *args
           super || actor!.respond_to?(*args)
         end
-      end
       
       module ClassMethods
         def find_by_slug(perm)

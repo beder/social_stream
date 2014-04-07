@@ -14,7 +14,6 @@ module SocialStream
           after_create :save_buddy
         end
         
-        module InstanceMethods
           
           def save_buddy
             
@@ -73,7 +72,6 @@ module SocialStream
             
           end
           
-        end
       end
     end
   end

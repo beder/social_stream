@@ -14,15 +14,15 @@ Gem::Specification.new do |s|
   # Gem dependencies
   s.add_runtime_dependency('social_stream-base', '~> 0.9.22')
   s.add_runtime_dependency('paperclip-ffmpeg', '~> 0.7.0')
-  s.add_runtime_dependency('paperclip','2.3.11')
+  s.add_runtime_dependency('paperclip','2.8.0')
   s.add_runtime_dependency('delayed_paperclip','>= 0.7.2')
   # Development Gem dependencies
   s.add_development_dependency('sqlite3-ruby')
   if RUBY_VERSION < '1.9'
     s.add_development_dependency('ruby-debug', '~> 0.10.3')
   end
-  s.add_development_dependency('rspec-rails', '~> 2.6.0')
+  s.add_development_dependency('rspec-rails', '~> 2.14.1')
   s.add_development_dependency('factory_girl', '~> 1.3.2')
   s.add_development_dependency('forgery', '~> 0.3.6')
-  s.add_development_dependency('capybara', '~> 0.3.9')
+  s.add_development_dependency('capybara', '~> 0.4.1.2')
 end
