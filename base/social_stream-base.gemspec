@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   # Tagging
   s.add_runtime_dependency('acts-as-taggable-on','~> 2.0.6')
   # HTML Forms
-  s.add_runtime_dependency('formtastic','~> 2.0.0')
+  s.add_runtime_dependency('formtastic','~> 2.1.0')
   # Simple navigation for menu
   s.add_runtime_dependency('simple-navigation')
   # Background jobs
