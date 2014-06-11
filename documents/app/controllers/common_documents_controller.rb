@@ -7,7 +7,7 @@ class CommonDocumentsController < InheritedResources::Base
 
 
   def show
-    path = resource.file.path(params[:style])
+    path = params[:style].present? ? resource.file.path(params[:style]) : resource.file.path
 
     respond_to do |format|
       format.html {render :action => :show}
