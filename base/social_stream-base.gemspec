@@ -54,6 +54,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('thinking-sphinx', '~> 2.0.8')
   #Syntactically Awesome Stylesheets
   s.add_runtime_dependency('sass-rails', '~> 3.2.6')
+  # Route translation
+  s.add_runtime_dependency('route_translator', '~> 3.1.0')
 
   # Development gem dependencies
   #
