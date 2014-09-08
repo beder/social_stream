@@ -5,7 +5,7 @@ class AuthenticationsController < ApplicationController
   
   def create
     auth = request.env["omniauth.auth"]
-    current_user.authentications.find_or_create_by_provider_and_uid(auth['provider'], auth['uid'])
+    current_user.authentications.find_or_create_by(provider:auth['provider'], uid:auth['uid'])
     redirect_to authentications_url
   end
   

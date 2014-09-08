@@ -8,4 +8,10 @@ class PostsController < InheritedResources::Base
 
     destroy!
   end
+
+  protected
+  
+  def permitted_params
+    params.permit(:post => [:_contact_id, :text])
+  end
 end

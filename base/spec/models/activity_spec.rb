@@ -5,7 +5,7 @@ describe Activity do
   describe "wall" do
     context "with a friend activity" do
       before do
-        @activity = Factory(:activity)
+        @activity = create(:activity)
       end
 
       describe "sender home" do
@@ -22,13 +22,13 @@ describe Activity do
 
       describe "alien home" do
         it "should not include activity" do
-          Factory(:user).wall(:home).should_not include(@activity)
+          create(:user).wall(:home).should_not include(@activity)
         end
       end
 
       describe "friend's profile" do
         it "should not include activity" do
-          friend = Factory(:friend, :contact => Factory(:contact, :sender => @activity.sender)).receiver
+          friend = create(:friend, :contact => create(:contact, :sender => @activity.sender)).receiver
           friend.wall(:profile, :for => @activity.sender).should_not include(@activity)
         end
       end
@@ -53,12 +53,12 @@ describe Activity do
 
     context "with a self friend activity" do
       before do
-        @activity = Factory(:self_activity)
+        @activity = create(:self_activity)
       end
 
       describe "friend's profile" do
         it "should not include activity" do
-          friend = Factory(:friend, :contact => Factory(:contact, :sender => @activity.sender)).receiver
+          friend = create(:friend, :contact => create(:contact, :sender => @activity.sender)).receiver
           friend.wall(:profile, :for => @activity.sender).should_not include(@activity)
         end
       end
@@ -66,7 +66,7 @@ describe Activity do
 
     context "with a public activity" do
       before do
-        @activity = Factory(:public_activity)
+        @activity = create(:public_activity)
       end
 
       describe "sender home" do
@@ -83,7 +83,7 @@ describe Activity do
 
       describe "alien home" do
         it "should not include activity" do
-          Factory(:user).wall(:home).should_not include(@activity)
+          create(:user).wall(:home).should_not include(@activity)
         end
       end
 

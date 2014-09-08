@@ -23,19 +23,36 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 # Load Factories
 require 'factory_girl'
-base_path = File.join(Gem::GemPathSearcher.new.find('social_stream-base').full_gem_path, 'spec')
+base_path = File.join(Gem::Specification.find_by_name('social_stream-base').full_gem_path, 'spec')
 [ base_path,  File.dirname(__FILE__) ].each do |path|
   Dir["#{path}/factories/*.rb"].each {|f| require f}
 end
 
-=begin
-RSpec.configure do |config|
-  # Remove this line if you don't want RSpec's should and should_not
-  # methods or matchers
-  require 'rspec/expectations'
-  config.include RSpec::Matchers
+require 'database_cleaner'
 
-  # == Mock Framework
-  config.mock_with :rspec
+RSpec.configure do |config|
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.infer_base_class_for_anonymous_controllers = false
+  config.order = "random"
+  config.color_enabled = true
+  config.tty = true
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
+  config.include ActionView::RecordIdentifier, type: :feature
+  config.include Rails.application.routes.url_helpers, type: :helper
+
+  config.before(:suite) do
+   DatabaseCleaner.strategy = :transaction
+   DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+   DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+   DatabaseCleaner.clean
+  end 
 end
-=end
+

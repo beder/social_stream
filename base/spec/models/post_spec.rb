@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Post do
   before do
-    @post = Factory(:post)
+    @post = create(:post)
     @post_activity_object = @post.activity_object
     @post_activity = @post.post_activity
   end 
 
   describe "with like activity" do
     before do
-      @like_activity = Factory(:like_activity, :parent => @post_activity)
+      @like_activity = create(:like_activity, :parent => @post_activity)
     end
 
     describe "when destroying" do
@@ -33,7 +33,7 @@ describe Post do
 
   context "without relations" do
     it "should allow create to friend" do
-      tie = Factory(:friend)
+      tie = create(:friend)
 
       post = Post.new :text => "testing",
                       :_contact_id => tie.contact.inverse!.id
@@ -46,7 +46,7 @@ describe Post do
     end
 
     it "should fill relation" do
-      tie = Factory(:friend)
+      tie = create(:friend)
 
       post = Post.new :text => "testing",
                       :_contact_id => tie.contact.inverse!.id

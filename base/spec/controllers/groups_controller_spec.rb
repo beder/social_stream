@@ -13,7 +13,7 @@ describe GroupsController do
     end
 
     it "should render show" do
-      get :show, :id => Factory(:group).to_param
+      get :show, :id => create(:group).to_param
 
       assert_response :success
     end
@@ -27,7 +27,7 @@ describe GroupsController do
     context "faking a new group" do
       it "should deny creating" do
         post :create, :group => { :name => "Test",
-                                  :_contact_id => Factory(:user).ego_contact.id
+                                  :_contact_id => create(:user).ego_contact.id
                                 }
 
         response.should redirect_to(new_user_session_path)
@@ -36,7 +36,7 @@ describe GroupsController do
 
     context "an existing group" do
       before do
-        @current_model = Factory(:group)
+        @current_model = create(:group)
       end
 
       it_should_behave_like "Deny Updating"
@@ -46,7 +46,7 @@ describe GroupsController do
 
   describe "when authenticated" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
 
       sign_in @user
     end
@@ -58,7 +58,7 @@ describe GroupsController do
     end
 
     it "should render contact group" do
-      @group = Factory(:member, :contact => Factory(:group_contact, :receiver => @user.actor)).sender_subject
+      @group = create(:member, :contact => create(:group_contact, :receiver => @user.actor)).sender_subject
       get :show, :id => @group.to_param
 
       response.should be_success
@@ -66,7 +66,7 @@ describe GroupsController do
     end
 
     it "should render other group" do
-      get :show, :id => Factory(:group).to_param
+      get :show, :id => create(:group).to_param
 
       assert_response :success
     end
@@ -96,8 +96,8 @@ describe GroupsController do
 
       context "with participants" do
         before do
-          @user_participant = Factory(:user)
-          @group_participant = Factory(:group)
+          @user_participant = create(:user)
+          @group_participant = create(:group)
 
           model_attributes[:_participants] = [@user_participant.actor_id, @group_participant.actor_id]
         end
@@ -125,7 +125,7 @@ describe GroupsController do
 
     context "a new fake group" do
       before do
-        model_attributes[:_contact_id] = Factory(:user).ego_contact.id
+        model_attributes[:_contact_id] = create(:user).ego_contact.id
       end
 
       it_should_behave_like "Deny Creating"
@@ -133,7 +133,7 @@ describe GroupsController do
 
     context "a external group" do
       before do
-        @current_model = Factory(:group)
+        @current_model = create(:group)
       end
 
       it_should_behave_like "Deny Updating"
@@ -143,7 +143,7 @@ describe GroupsController do
 
     context "a existing own group" do
       before do
-        @current_model = Factory(:member, :contact => Factory(:group_contact, :receiver => @user.actor)).sender_subject
+        @current_model = create(:member, :contact => create(:group_contact, :receiver => @user.actor)).sender_subject
       end
 
       it "should update contact group" do

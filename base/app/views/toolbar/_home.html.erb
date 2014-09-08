@@ -7,9 +7,5 @@
     <%= yield(:toolbar_menu).empty? ? home_toolbar_menu : yield(:toolbar_menu)%>
 </div>
 
-<% if defined?(SocialStream::Presence) and SocialStream::Presence.enable %>
-  <%= render :partial => 'xmpp/chat' %>
-<% end %>
-
 <div class="block space_center">
 </div>

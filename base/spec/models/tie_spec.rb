@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Tie do
   describe "follower_count" do
     it "should be incremented" do
-      sender, receiver = 2.times.map{ Factory(:user) }
+      sender, receiver = 2.times.map{ create(:user) }
 
       count = receiver.follower_count
 
@@ -20,7 +20,7 @@ describe Tie do
     end
     
     it "should be decremented" do
-      tie = Factory(:friend)
+      tie = create(:friend)
       contact = tie.contact
       receiver = tie.receiver
       count = receiver.follower_count
@@ -33,7 +33,7 @@ describe Tie do
 
   describe "friend" do
     before do
-      @tie = Factory(:friend)
+      @tie = create(:friend)
     end
 
     it "should create pending" do
@@ -47,12 +47,12 @@ describe Tie do
 
     context "reciprocal" do
       before do
-        @reciprocal = Factory(:friend, :contact => @tie.contact.inverse!)
+        @reciprocal = create(:friend, :contact => @tie.contact.inverse!)
       end
 
-      it "should create activity with make-friend verb" do
+      it "should create activity with make_friend verb" do
         @reciprocal.contact.activities.should be_present
-        @reciprocal.contact.activities.first.verb.should eq('make-friend')
+        @reciprocal.contact.activities.first.verb.should eq('make_friend')
       end
     end
 
@@ -60,13 +60,13 @@ describe Tie do
 
   describe "with public relation" do
     before do
-      @tie = Factory(:public)
+      @tie = create(:public)
     end
 
     it "should create activity" do
       count = Activity.count
 
-      Factory(:public)
+      create(:public)
 
       Activity.count.should eq(count + 1)
     end
@@ -81,7 +81,7 @@ describe Tie do
 
     context "with public reply" do
       before do
-        Factory(:public, :contact => @tie.contact.inverse!)
+        create(:public, :contact => @tie.contact.inverse!)
 
         # It should reload tie.contact again, as its inverse is now set
         @tie.reload
@@ -98,7 +98,7 @@ describe Tie do
 
     context "with reject reply" do
       before do
-       Factory(:reject, :contact => @tie.contact.inverse!)
+       create(:reject, :contact => @tie.contact.inverse!)
 
         # It should reload tie.contact again, as its inverse is now set
         @tie.reload
@@ -116,13 +116,13 @@ describe Tie do
 
   describe "with reject relation" do
     before do
-      @tie = Factory(:reject)
+      @tie = create(:reject)
     end
 
     it "should not create activity" do
       count = Activity.count
 
-      Factory(:reject)
+      create(:reject)
 
       Activity.count.should eq(count)
     end
@@ -133,7 +133,7 @@ describe Tie do
 
     context "with public reply" do
       before do
-        Factory(:public, :contact => @tie.contact.inverse!)
+        create(:public, :contact => @tie.contact.inverse!)
 
         # It should reload tie.contact again, as its inverse is now set
         @tie.reload
@@ -150,7 +150,7 @@ describe Tie do
 
     context "with reject reply" do
       before do
-       Factory(:reject, :contact => @tie.contact.inverse!)
+       create(:reject, :contact => @tie.contact.inverse!)
 
         # It should reload tie.contact again, as its inverse is now set
         @tie.reload

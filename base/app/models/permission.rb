@@ -36,11 +36,13 @@
 #
 #
 class Permission < ActiveRecord::Base
-  has_many :relation_permissions, :dependent => :destroy
+  
+  has_many :relation_permissions, :inverse_of=>:permission, :dependent => :destroy
+  
   has_many :relations, :through => :relation_permissions
 
   %w(represent follow).each do |p|
-    scope p, where(:action => p) # scope :represent, where(:action => 'represent')
+    scope p, -> { where(:action => p) } # scope :represent, where(:action => 'represent')
   end
 
   # An explanation of the permissions. Type can be brief or detailed.

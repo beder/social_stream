@@ -24,7 +24,7 @@ class ContactsController < ApplicationController
     params[:contact][:relation_ids].present? &&
      params[:contact][:relation_ids].delete("0")
 
-    if @contact.update_attributes(params[:contact])
+    if @contact.update_attributes(permitted_params[:contact])
       redirect_to @contact.receiver_subject
     else
       render :action => 'edit'
@@ -36,6 +36,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.html { redirect_to :back }
     end
   end
 
@@ -54,6 +55,12 @@ class ContactsController < ApplicationController
         render :action => :index
       }
     end
+  end
+
+  protected
+  
+  def permitted_params
+    params.permit(:contact => [ {:relation_ids=>[]}, :message ] )
   end
 
   private

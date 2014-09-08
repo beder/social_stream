@@ -1,6 +1,8 @@
 class ActivityObjectActivity < ActiveRecord::Base
-  belongs_to :activity, :dependent => :destroy
-  belongs_to :activity_object
+  
+  belongs_to :activity, :inverse_of=>:activity_object_activities, :dependent => :destroy
+  
+  belongs_to :activity_object, :inverse_of=>:activity_object_activities
 
   before_create :default_object_type
 

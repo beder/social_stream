@@ -1,3 +1,5 @@
+require 'social_stream/dependent_destroyer'
+
 # Activities follow the {Activity Streams}[http://activitystrea.ms/] standard.
 #
 # == Activities, Contacts and Audiences
@@ -12,21 +14,30 @@
 # There are two types of wall, :home and :profile. Check {Actor#wall} for more information
 #
 class Activity < ActiveRecord::Base
+  include SocialStream::DependentDestroyer
+  
   has_ancestry
 
   paginates_per 10
 
-  belongs_to :activity_verb
+  belongs_to :activity_verb, :inverse_of => :activities
 
-  belongs_to :contact
+  belongs_to :contact, :inverse_of => :activities
+  
   has_one :sender,   :through => :contact
+  
   has_one :receiver, :through => :contact
 
-  has_many :audiences, :dependent => :destroy
+  has_many :audiences, :inverse_of=>:activity, :dependent => :destroy
+  
   has_many :relations, :through => :audiences
 
   has_many :activity_object_activities,
-           :dependent => :destroy
+           :inverse_of=>:activity# ,
+           # :dependent => :destroy
+           
+  dependent_destroy_many :activity_object_activities
+  
   has_many :activity_objects,
            :through => :activity_object_activities
 
@@ -182,7 +193,7 @@ class Activity < ActiveRecord::Base
   # The title for this activity in the stream
   def title view
     case verb
-    when "follow", "make-friend", "like"
+    when "follow", "make_friend", "like"
       I18n.t "activity.verb.#{ verb }.#{ receiver.subject_type }.title",
       :subject => view.link_name(sender_subject),
       :contact => view.link_name(receiver_subject)
@@ -203,10 +214,10 @@ class Activity < ActiveRecord::Base
 
   def notify
     return true if !notificable?
-    #Avaible verbs: follow, like, make-friend, post, update
+    #Avaible verbs: follow, like, make_friend, post, update
     actionview = ActivitiesController.new.view_context
 
-    if ['like','follow','make-friend','post','update'].include? verb and !contact.reflexive?
+    if ['like','follow','make_friend','post','update'].include? verb and !contact.reflexive?
       notification_subject = actionview.render :partial => 'notifications/activities/' + verb + "_subject", :locals => {:activity => self}
       notification_body = actionview.render :partial =>  'notifications/activities/' + verb + "_body", :locals => {:activity => self}
       receiver.notify(notification_subject, notification_body, self)

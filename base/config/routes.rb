@@ -2,11 +2,11 @@ Rails.application.routes.draw do
   
   root :to => "frontpage#index"
   
-  match 'home' => 'home#index', :as => :home
-  match 'home' => 'home#index', :as => :user_root # devise after_sign_in_path_for
+  get 'home' => 'home#index', :as => :home
+  get 'home' => 'home#index', :as => :user_root # devise after_sign_in_path_for
   
   # Webfinger
-  match '.well-known/host-meta',:to => 'frontpage#host_meta'
+  get '.well-known/host-meta',:to => 'frontpage#host_meta'
   
   # Social Stream subjects configured in config/initializers/social_stream.rb
   SocialStream.subjects.each do |actor|
@@ -30,10 +30,10 @@ Rails.application.routes.draw do
   end
   resources :permissions
 
-  match 'tags'     => 'tags#index', :as => 'tags'
+  get 'tags'     => 'tags#index', :as => 'tags'
   
   # Find subjects by slug
-  match 'subjects/lrdd/:id' => 'subjects#lrdd', :as => 'subject_lrdd'
+  get 'subjects/lrdd/:id' => 'subjects#lrdd', :as => 'subject_lrdd'
   
   resource :representation
   
@@ -61,9 +61,9 @@ Rails.application.routes.draw do
     resource :like
   end
   
-  match 'search' => 'search#index', :as => :search  
+  get 'search' => 'search#index', :as => :search  
   
-  match 'ties' => 'ties#index', :as => :ties
+  get 'ties' => 'ties#index', :as => :ties
   
   # Social Stream objects configured in config/initializers/social_stream.rb
   (SocialStream.objects - [ :actor ]).each do |object|
@@ -71,12 +71,12 @@ Rails.application.routes.draw do
   end
   
   ##API###
-  match 'api/keygen' => 'api#create_key', :as => :api_keygen
-  match 'api/user/:id' => 'api#users', :as => :api_user
-  match 'api/me' => 'api#users', :as => :api_me
-  match 'api/me/home/' => 'api#activity_atom_feed', :format => 'atom', :as => :api_my_home
-  match 'api/me/contacts' => 'contacts#index', :format => 'json', :as => :api_contacts
-  match 'api/subjects/:s/contacts' => 'contacts#index', :format => 'json', :as => :api_subject_contacts
-  match 'api/user/:id/public' => 'api#activity_atom_feed', :format => 'atom', :as => :api_user_activities
+  get 'api/keygen' => 'api#create_key', :as => :api_keygen
+  get 'api/user/:id' => 'api#users', :as => :api_user
+  get 'api/me' => 'api#users', :as => :api_me
+  get 'api/me/home/' => 'api#activity_atom_feed', :format => 'atom', :as => :api_my_home
+  get 'api/me/contacts' => 'contacts#index', :format => 'json', :as => :api_contacts
+  get 'api/subjects/:s/contacts' => 'contacts#index', :format => 'json', :as => :api_subject_contacts
+  get 'api/user/:id/public' => 'api#activity_atom_feed', :format => 'atom', :as => :api_user_activities
   ##/API##
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Contact do
   context "inverse" do
     before do
-      @sent = Factory(:contact)
+      @sent = create(:contact)
       @received = @sent.inverse!
     end
 
@@ -14,7 +14,7 @@ describe Contact do
 
   context "with message" do
     before do
-      @sent = Factory(:contact, :message => 'Hello')
+      @sent = create(:contact, :message => 'Hello')
       @received = @sent.inverse!
     end
 
@@ -26,7 +26,7 @@ describe Contact do
 
   context "spurious" do
     before do
-      @contact = Factory(:contact)
+      @contact = create(:contact)
       @contact.inverse!
     end
 
@@ -37,10 +37,10 @@ describe Contact do
 
   context "a pair" do
     before do
-      @friend = Factory(:friend)
+      @friend = create(:friend)
       @sender = @friend.sender
-      @acquaintance = Factory(:acquaintance,
-                              :contact => Factory(:contact,
+      @acquaintance = create(:acquaintance,
+                              :contact => create(:contact,
                                                   :sender => @sender))
     end
 

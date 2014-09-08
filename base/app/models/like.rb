@@ -5,7 +5,7 @@ class Like
   class << self
     # Find the children activity of activity_id liked by subject
     def find(subject, object)
-      like = new(object.liked_by(subject).first)
+      like = new(object.liked_by(subject).readonly(false).first)
       # Cache object to make it available before it is destroyed
       like.object
       like

@@ -5,7 +5,7 @@ describe ContactsController do
   render_views
 
   before(:all) do
-    @tie = Factory(:friend)
+    @tie = create(:friend)
     @user = @tie.sender_subject
   end
 
@@ -48,7 +48,7 @@ describe ContactsController do
   it "should create contact" do
     sign_in @user
 
-    group = Factory(:group)
+    group = create(:group)
     contact = @user.contact_to!(group)
     
 
@@ -66,7 +66,7 @@ describe ContactsController do
   it "should create contact with several relations" do
     sign_in @user
 
-    group = Factory(:group)
+    group = create(:group)
     contact = @user.contact_to!(group)
     # Initialize inverse contact
     contact.inverse!

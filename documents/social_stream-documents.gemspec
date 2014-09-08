@@ -13,16 +13,23 @@ Gem::Specification.new do |s|
 
   # Gem dependencies
   s.add_runtime_dependency('social_stream-base', '~> 0.9.22')
-  s.add_runtime_dependency('paperclip-ffmpeg', '~> 0.7.0')
-  s.add_runtime_dependency('paperclip','2.8.0')
-  s.add_runtime_dependency('delayed_paperclip','>= 0.7.2')
-  # Development Gem dependencies
-  s.add_development_dependency('sqlite3-ruby')
-  if RUBY_VERSION < '1.9'
-    s.add_development_dependency('ruby-debug', '~> 0.10.3')
-  end
-  s.add_development_dependency('rspec-rails', '~> 2.14.1')
-  s.add_development_dependency('factory_girl', '~> 1.3.2')
-  s.add_development_dependency('forgery', '~> 0.3.6')
+  s.add_runtime_dependency('paperclip','~> 3.5.1')
+  s.add_runtime_dependency('paperclip-ffmpeg', '~> 1.0.1')
+  s.add_runtime_dependency('delayed_paperclip','>= 2.6.1')
+  s.add_runtime_dependency('route_translator', '~> 3.1.0')
+  
+  # Development gem dependencies
+  #
+  # Integration testing
   s.add_development_dependency('capybara', '~> 0.4.1.2')
+  # Testing database
+  s.add_development_dependency('sqlite3-ruby')
+  s.add_development_dependency('database_cleaner')
+
+  # Specs
+  s.add_development_dependency('rspec-rails', '~> 2.14.1')
+  # Fixtures
+  s.add_development_dependency('factory_girl')
+  # Population
+  s.add_development_dependency('forgery', '~> 0.4.2')
 end

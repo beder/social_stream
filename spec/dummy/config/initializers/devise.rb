@@ -72,10 +72,6 @@ Devise.setup do |config|
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
 
-  # If true, uses the password salt as remember token. This should be turned
-  # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
-
   # ==> Configuration for :validatable
   # Range for password length. Default is 6..20.
   # config.password_length = 6..20
@@ -126,7 +122,7 @@ Devise.setup do |config|
   # If true, authentication through token does not store user in session and needs
   # to be supplied on each request. Useful if you are using the token as API token.
   # config.stateless_token = false
-
+  config.secret_key = '3600342d75bf7ac2d09f090a6cc2e3ccffce74a133d3c2d71f12d1a5a380ef701966cc04a5a4c1ff4661f5364645f480f1a830ac2df82759ae873f7c084c971e'
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you

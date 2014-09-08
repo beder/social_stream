@@ -1,5 +1,7 @@
-class ActivitiesController < InheritedResources::Base
-  belongs_to_subjects
+class ActivitiesController < InheritedResources::Base  
+  SocialStream.subjects.each do |subj|
+    belongs_to subj, { :polymorphic => true, :finder => :find_by_slug! }
+  end
   actions :index
 
   respond_to :js
@@ -16,4 +18,5 @@ class ActivitiesController < InheritedResources::Base
                            :relation => rel).
                       page(params[:page])
   end
+
 end

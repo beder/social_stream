@@ -21,22 +21,25 @@ class Actor < ActiveRecord::Base
 
   acts_as_url :name, :url_attribute => :slug
   
-  has_one :profile, :dependent => :destroy
+  has_one :profile, :inverse_of=>:actor, :dependent => :destroy
 
   has_many :avatars,
            :validate => true,
            :autosave => true
-  has_one  :avatar,
-           :conditions => { :active => true }
+  
+  has_one  :avatar, 
+           -> { where :active => true }
   		  
   has_many :sent_contacts,
            :class_name  => 'Contact',
            :foreign_key => 'sender_id',
+           :inverse_of => :sender,
            :dependent   => :destroy
 
   has_many :received_contacts,
            :class_name  => 'Contact',
            :foreign_key => 'receiver_id',
+           :inverse_of => :receiver,
            :dependent   => :destroy
 
   has_many :sent_ties,
@@ -48,17 +51,18 @@ class Actor < ActiveRecord::Base
            :source  => :ties
   
   has_many :senders,
-           :through => :received_contacts,
-           :uniq => true
+           -> { uniq }, 
+           :through => :received_contacts
   
   has_many :receivers,
-           :through => :sent_contacts,
-           :uniq => true
+           -> { uniq }, 
+           :through => :sent_contacts
 
   has_many :relations,
+           :inverse_of=>:actor,
            :dependent => :destroy
 
-  scope :alphabetic, order('actors.name')
+  scope :alphabetic, -> { order('actors.name') }
 
   scope :letter, lambda { |param|
     if param.present?
@@ -78,7 +82,7 @@ class Actor < ActiveRecord::Base
     end
   }
 
-  scope :distinct_initials, select('DISTINCT SUBSTR(actors.name,1,1) as initial').order("initial ASC")
+  scope :distinct_initials, -> { select('DISTINCT SUBSTR(actors.name,1,1) as initial').order("initial ASC") }
 
   scope :contacted_to, lambda { |a|
     joins(:sent_contacts).merge(Contact.active.received_by(a))
@@ -370,7 +374,7 @@ class Actor < ActiveRecord::Base
 
   # Build a new {Contact} from each that has not inverse
   def pending_contacts
-    received_contacts.pending.includes(:inverse).all.map do |c|
+    received_contacts.pending.includes(:inverse).to_a.map do |c|
       c.inverse ||
         c.receiver.contact_to!(c.sender)
     end

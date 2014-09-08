@@ -3,11 +3,13 @@ require 'devise/orm/active_record'
 class User < ActiveRecord::Base
   include SocialStream::Models::Subject
 
-  has_many :authentications, :dependent => :destroy
+  has_many :authentications, :inverse_of=>:user, :dependent => :destroy
+  
   devise *SocialStream.devise_modules
-
+  include TokenAuthenticatable
+  
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :profile_attributes
+  # attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :profile_attributes
   
   validates_presence_of :email
 
@@ -59,10 +61,10 @@ class User < ActiveRecord::Base
     %w( email slug name ).each do |a|
       eval <<-EOS
     def find_by_#{ a }(#{ a })             # def find_by_email(email)
-      find :first,                         #   find(:first,
-           :include => :actor,             #         :include => :actor,
-           :conditions =>                  #         :conditions =>
-             { 'actors.#{ a }' => #{ a } } #           { 'actors.email' => email }
+      includes(:actor).                    #   includes(:actor).
+      where('actors.#{ a }' => #{ a }).    #   where('actors.email' => email).
+      references(:actors).                 #   references(:actors).
+      first                                #   first
     end                                    # end
       EOS
     end

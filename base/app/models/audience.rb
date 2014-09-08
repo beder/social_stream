@@ -4,6 +4,9 @@
 # that are assigned to that relation and the {permissions Permission} granted to
 # that {Audience}
 class Audience < ActiveRecord::Base
-  belongs_to :activity
-  belongs_to :relation
+  
+  belongs_to :activity, :inverse_of => :audiences
+  
+  belongs_to :relation, :inverse_of => :audiences
+  
 end

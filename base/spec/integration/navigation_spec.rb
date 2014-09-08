@@ -7,9 +7,9 @@ describe "Navigation" do
     ::Rails.application.should be_a(Dummy::Application)
   end
 
-  context "logged in" do
+  context "logged in", :js => true do
     before(:all) do
-      @user = Factory(:user)
+      @user = create(:user)
 
       visit root_path
       fill_in 'user_email', :with => @user.email
@@ -20,13 +20,12 @@ describe "Navigation" do
 
     context "with other user" do
       before do
-        Factory(:user)
+        create(:user)
       end
 
       it "should close tab" do
         visit home_path
         click_link "X"
-
       end
     end
   end

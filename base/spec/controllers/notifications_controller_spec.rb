@@ -6,10 +6,10 @@ describe NotificationsController do
   render_views
 
   before do
-    @user = Factory(:user)
+    @user = create(:user)
     @actor =  @user.actor
     sign_in @user
-    @receipt = @user.notify("subject", "body", Factory(:activity))
+    @receipt = @user.notify("subject", "body", create(:activity))
   end
 
   it "should render index" do
@@ -30,7 +30,7 @@ describe NotificationsController do
   end
 
   it "should update all" do
-    @receipt2 = @user.notify("subject", "body", Factory(:activity))
+    @receipt2 = @user.notify("subject", "body", create(:activity))
     put :update_all
     @receipt.notification.is_unread?(@actor).should==false
     @receipt2.notification.is_unread?(@actor).should==false

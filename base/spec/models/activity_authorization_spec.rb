@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module ActivityTestHelper
   def create_activity(contact, relations)
-    @activity = Factory(:activity,
+    @activity = create(:activity,
                         :contact_id => contact.id,
                         :relation_ids => Array(Relation.normalize_id(relations)))
 
@@ -19,12 +19,12 @@ module ActivityTestHelper
   end
 
   def create_ability_accessed_publicly
-    u = Factory(:user)
+    u = create(:user)
     @ability = Ability.new(u)
   end
 
   def create_related_tie(tie_type)
-    Factory(tie_type, :contact => Factory(:contact, :sender => Actor.normalize(@subject)))
+    create(tie_type, :contact => create(:contact, :sender => Actor.normalize(@subject)))
   end
 
   shared_examples_for "Allows Creating" do
@@ -82,7 +82,7 @@ describe Activity do
 
   context "user" do
     before(:all) do
-      @subject = @user = Factory(:user)
+      @subject = @user = create(:user)
     end
 
     context "with public activity" do
@@ -101,7 +101,7 @@ describe Activity do
         context "accessed by alien" do
           it "should include activity" do
             @activity.sender.wall(:profile,
-                                  :for => Factory(:user)).should include(@activity)
+                                  :for => create(:user)).should include(@activity)
           end
         end
 
@@ -269,7 +269,7 @@ describe Activity do
     describe "belonging to other user's public relation" do
 
       before do
-        @tie = Factory(:public)
+        @tie = create(:public)
         create_activity @tie.contact, @tie.sender.relation_public
         create_ability_accessed_by @tie.receiver_subject
       end
@@ -279,7 +279,7 @@ describe Activity do
 
     describe "build to non replied contact" do
       before do
-        @tie = Factory(:friend, :contact => Factory(:contact, :sender => @user.actor))
+        @tie = create(:friend, :contact => create(:contact, :sender => @user.actor))
         @activity = Activity.new :contact_id => @tie.contact.id
         create_ability_accessed_by @tie.sender_subject
       end
@@ -290,7 +290,7 @@ describe Activity do
 
   context "group" do
     before(:all) do
-      @subject = @group = Factory(:group)
+      @subject = @group = create(:group)
     end
 
     describe "belonging to member tie" do

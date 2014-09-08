@@ -54,13 +54,13 @@ module SocialStream
                        :relation_ids => Array(_relation_ids)
         end
 
-	# before_create callback
-	#
+	      # before_create callback
+	      #
         # Build corresponding ActivityObject including this class type
         def create_activity_object_with_type #:nodoc:
           o = create_activity_object! :object_type => self.class.to_s
-	  # WEIRD: Rails 3.1.0.rc3 does not assign activity_object_id
-	  self.activity_object_id = o.id
+	        # WEIRD: Rails 3.1.0.rc3 does not assign activity_object_id
+	        self.activity_object_id = o.id
         end
 
         def _contact
