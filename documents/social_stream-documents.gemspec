@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('paperclip','~> 3.5.1')
   s.add_runtime_dependency('paperclip-ffmpeg', '~> 1.0.1')
   s.add_runtime_dependency('delayed_paperclip','>= 2.6.1')
-  s.add_runtime_dependency('route_translator', '~> 3.1.0')
+  s.add_runtime_dependency('route_translator', '~> 3.2.4')
   
   # Development gem dependencies
   #

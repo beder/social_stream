@@ -77,7 +77,7 @@ Gem::Specification.new do |s|
   # Sphinx search engine
   s.add_runtime_dependency('thinking-sphinx')
   # Route translation
-  s.add_runtime_dependency('route_translator', '~> 3.1.0')
+  s.add_runtime_dependency('route_translator', '~> 3.2.4')
 
   # Development gem dependencies
   #
