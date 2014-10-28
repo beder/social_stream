@@ -319,7 +319,7 @@ class Activity < ActiveRecord::Base
 
   def destroy_children_comments
     comments.each do |c|
-      c.direct_object.destroy
+      c.direct_object.destroy if c.direct_object
     end
   end
 

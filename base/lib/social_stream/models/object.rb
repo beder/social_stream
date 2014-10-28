@@ -106,7 +106,7 @@ module SocialStream
           if self.post_activity
             begin
               self.post_activity.reload
-              self.post_activity.destroy
+              self.post_activity.destroy if self.post_activity
             rescue ActiveRecord::RecordNotFound => e
               nil
             end
@@ -114,7 +114,7 @@ module SocialStream
           if self.activity_object
             begin
               self.activity_object.reload
-              self.activity_object.destroy
+              self.activity_object.destroy if self.activity_object
             rescue ActiveRecord::RecordNotFound => e
               nil
             end
