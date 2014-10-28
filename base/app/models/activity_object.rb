@@ -13,13 +13,10 @@ require 'social_stream/dependent_destroyer'
 class ActivityObject < ActiveRecord::Base
   @subtypes_name = :object
   include SocialStream::Models::Supertype
-  include SocialStream::DependentDestroyer
 
   acts_as_taggable
   
-  has_many :activity_object_activities, :inverse_of=>:activity_object #, :dependent => :destroy
-  
-  dependent_destroy_many :activity_object_activities
+  has_many :activity_object_activities, :inverse_of=>:activity_object, :dependent => :destroy
   
   has_many :activities, :through => :activity_object_activities
 

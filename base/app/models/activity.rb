@@ -14,7 +14,9 @@ require 'social_stream/dependent_destroyer'
 # There are two types of wall, :home and :profile. Check {Actor#wall} for more information
 #
 class Activity < ActiveRecord::Base
-  include SocialStream::DependentDestroyer
+  after_create  :increment_like_count
+  before_destroy :destroy_children_comments
+  after_destroy :decrement_like_count, :delete_notifications
   
   has_ancestry
 
@@ -33,11 +35,9 @@ class Activity < ActiveRecord::Base
   has_many :relations, :through => :audiences
 
   has_many :activity_object_activities,
-           :inverse_of=>:activity# ,
-           # :dependent => :destroy
+           :inverse_of=>:activity,
+           :dependent => :destroy
            
-  dependent_destroy_many :activity_object_activities
-  
   has_many :activity_objects,
            :through => :activity_object_activities
 
@@ -315,6 +315,12 @@ class Activity < ActiveRecord::Base
   #Send notifications to actors based on proximity, interest and permissions
   def send_notifications
     notify
+  end
+
+  def destroy_children_comments
+    comments.each do |c|
+      c.direct_object.destroy
+    end
   end
 
   # after_create callback

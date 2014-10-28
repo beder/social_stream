@@ -7,11 +7,12 @@ module SocialStream
       extend ActiveSupport::Concern
 
       included do
+        after_destroy :remove_associated_objects
         attr_accessor :_contact_id
         attr_writer   :_relation_ids
         attr_accessor :_activity_parent_id
 
-        belongs_to :activity_object, :dependent => :destroy, :autosave => true
+        belongs_to :activity_object, :autosave => true
         has_many   :activity_object_activities, :through => :activity_object
 
         delegate :post_activity,
@@ -100,7 +101,25 @@ module SocialStream
         end
 
         private
-
+        
+        def remove_associated_objects
+          if self.post_activity
+            begin
+              self.post_activity.reload
+              self.post_activity.destroy
+            rescue ActiveRecord::RecordNotFound => e
+              nil
+            end
+          end
+          if self.activity_object
+            begin
+              self.activity_object.reload
+              self.activity_object.destroy
+            rescue ActiveRecord::RecordNotFound => e
+              nil
+            end
+          end
+        end
         def create_post_activity
           create_activity "post"
         end
