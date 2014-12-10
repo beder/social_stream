@@ -12,6 +12,6 @@ class PostsController < InheritedResources::Base
   protected
   
   def permitted_params
-    params.permit(:post => [:_contact_id, :text])
+    params.permit(:post => [:_contact_id, :text, {:_relation_ids=>[]}])
   end
 end
