@@ -13,12 +13,11 @@ Gem::Specification.new do |s|
   # Gem dependencies
   s.add_runtime_dependency('social_stream-base', '~> 0.9.22')
   s.add_runtime_dependency('social_stream-documents', '~> 0.3.3')
-  s.add_runtime_dependency('social_stream-events', '~> 0.0.15')
  
   # Development Gem dependencies
   #
   # Integration testing
-  s.add_development_dependency('capybara', '~> 0.3.9')
+  s.add_development_dependency('capybara', '~> 0.4.1.2')
   # Testing database
   case ENV['DB']
   when 'mysql'
@@ -26,18 +25,16 @@ Gem::Specification.new do |s|
   when 'postgres'
     s.add_development_dependency('pg')
   else
-    s.add_development_dependency('sqlite3')
+    s.add_development_dependency('sqlite3', '~> 1.3.5')
   end
-  # Debugging
-  if RUBY_VERSION < '1.9'
-    s.add_development_dependency('ruby-debug', '~> 0.10.3')
-  end
+  s.add_development_dependency('database_cleaner')
+  
   # Specs
-  s.add_development_dependency('rspec-rails', '~> 2.6.0')
+  s.add_development_dependency('rspec-rails', '~> 2.14.1')
   # Fixtures
-  s.add_development_dependency('factory_girl', '~> 1.3.2')
+  s.add_development_dependency('factory_girl')
   # Population
-  s.add_development_dependency('forgery', '~> 0.3.6')
+  s.add_development_dependency('forgery',  '~> 0.4.2')
   # Continous integration
   s.add_development_dependency('ci_reporter', '~> 1.6.4')
 end

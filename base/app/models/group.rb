@@ -1,12 +1,12 @@
 class Group < ActiveRecord::Base
   include SocialStream::Models::Subject
-
+  
   attr_accessor :_participants
 
   delegate :description, :description=, :to => :profile!
 
   after_create :create_ties
-
+  
   def profile!
     actor!.profile || actor!.build_profile
   end
@@ -33,8 +33,7 @@ class Group < ActiveRecord::Base
 
   # Creates the ties from the founder to the group
   def create_ties_from_founder
-    _contact.sender.sent_contacts.create! :receiver_id  => actor_id,
-                                          :relation_ids => _relation_ids
+    _contact.sender.sent_contacts.create! :receiver_id  => actor_id, :relation_ids => _relation_ids
   end
   
   # Creates the ties from the group to the participants

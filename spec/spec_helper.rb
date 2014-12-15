@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= "test"
 ENV["RAILS_ENV"] = "#{ ENV["RAILS_ENV"] }_#{ ENV['DB'] }" if ENV['DB']
 
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require "rails/test_help"
 require "rspec/rails"
 
 ActionMailer::Base.delivery_method = :test
@@ -25,3 +26,32 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 # Load Factories
 require 'factory_girl'
 Dir["#{File.dirname(__FILE__)}/factories/*.rb", "#{File.dirname(__FILE__)}/../*/spec/factories/*.rb"].each {|f| require f}
+
+require 'database_cleaner'
+
+RSpec.configure do |config|
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.infer_base_class_for_anonymous_controllers = false
+  config.order = "random"
+  config.color_enabled = true
+  config.tty = true
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
+  config.include ActionView::RecordIdentifier, type: :feature
+  config.include Rails.application.routes.url_helpers, type: :helper
+
+  config.before(:suite) do
+   DatabaseCleaner.strategy = :transaction
+   DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+   DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+   DatabaseCleaner.clean
+  end 
+end
+

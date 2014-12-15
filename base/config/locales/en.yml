@@ -72,7 +72,7 @@ en:
         Group:
           title: "%{subject} is a fan of %{contact}."
           message: "%{name} is now your fan."
-      make-friend:
+      make_friend:
         User:
           title: "%{subject} and %{contact} are now connected."
           message: "%{name} also added you as contact."

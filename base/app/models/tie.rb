@@ -30,14 +30,15 @@
 #                        integer, array
 class Tie < ActiveRecord::Base
 
-  belongs_to :contact, :counter_cache => true
+  belongs_to :contact, :inverse_of => :ties, :counter_cache => true
 
   has_one :sender,   :through => :contact
+  
   has_one :receiver, :through => :contact
 
-  belongs_to :relation
+  belongs_to :relation, :inverse_of=>:ties
 
-  scope :recent, order("ties.created_at DESC")
+  scope :recent, -> { order("ties.created_at DESC") }
 
   scope :sent_by, lambda { |a|
     joins(:contact).merge(Contact.sent_by(a))
@@ -62,7 +63,7 @@ class Tie < ActiveRecord::Base
       where('permissions.object' => object)
   }
 
-  validates_presence_of :contact_id, :relation_id
+  validates_presence_of :contact, :relation
 
   validate :relation_belongs_to_sender
 
@@ -147,6 +148,6 @@ class Tie < ActiveRecord::Base
 
   def relation_belongs_to_sender
     errors.add(:relation, "must belong to sender") unless
-      contact.sender_id == relation.actor_id
+      self.contact.sender_id == self.relation.actor_id
   end
 end

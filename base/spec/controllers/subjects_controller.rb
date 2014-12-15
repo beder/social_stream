@@ -4,7 +4,7 @@ describe SubjectsController do
   render_views
 
   it "should redirect lrdd" do
-    @user = Factory(:user)
+    @user = create(:user)
 
     get :lrdd, :id => "#{ @user.slug }@test.host"
 

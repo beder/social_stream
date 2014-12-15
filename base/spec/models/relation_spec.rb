@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Relation do
   context "authorization" do
     before(:all) do
-      @tie = Factory(:friend)
+      @tie = create(:friend)
       @relation = @tie.relation
     end
 
@@ -23,7 +23,7 @@ describe Relation do
 
     describe ", acquaintance" do
       before do
-        @s = Factory(:acquaintance, :contact => Factory(:contact, :sender => @tie.sender)).receiver
+        @s = create(:acquaintance, :contact => create(:contact, :sender => @tie.sender)).receiver
       end
 
       it "creates activity" do
@@ -37,7 +37,7 @@ describe Relation do
 
     describe ", alien" do
       before do
-        @s = Factory(:user)
+        @s = create(:user)
       end
 
       it "creates activity" do
@@ -52,13 +52,13 @@ describe Relation do
 
   describe "member" do
     before do
-      @tie = Factory(:member)
+      @tie = create(:member)
       @relation = @tie.relation
     end
 
     describe ", member" do
       before do
-        @s = Factory(:member, :contact => Factory(:contact, :sender => @tie.sender)).receiver
+        @s = create(:member, :contact => create(:contact, :sender => @tie.sender)).receiver
       end
 
       it "creates activity" do

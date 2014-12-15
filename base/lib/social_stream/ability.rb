@@ -6,7 +6,9 @@ module SocialStream
     def initialize(subject)
       
       #Download alias action
-      alias_action :download, :to => :show
+      # Fix compatibility with Cancan 1.6.9
+      # https://github.com/ging/social_stream/commit/cfd058e062fcd3bbcbc0b8bdbd11258a978f025a
+      alias_action :download, :to => :read
       
       # Activity Objects
       (SocialStream.objects - [ :actor, :comment ]).map{ |obj|

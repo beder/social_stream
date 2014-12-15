@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem 'route_translator'
 gem 'social_stream-base', :path => '../base'
 
 gemspec

@@ -42,6 +42,10 @@ class GroupsController < InheritedResources::Base
 
   protected
 
+  def permitted_params
+    params.permit(:group => [:_contact_id, :name, {:_participants=>[]}, :description, :description])
+  end
+
   # Overwrite resource method to support slug
   # See InheritedResources::BaseHelpers#resource
   def resource

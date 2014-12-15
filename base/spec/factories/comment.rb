@@ -1,5 +1,9 @@
-Factory.define :comment do |p|
-  p.sequence(:text)  { |n| "Comment #{ n }" }
-  p._contact_id { Factory(:friend).contact_id }
-  p._relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_customs.sort.first.id) }
+FactoryGirl.define do
+  sequence(:comment_seq)  { |n| n }
+  
+  factory :comment do
+    text { "Comment #{ generate(:comment_seq) }" }
+    _contact_id { create(:friend).contact_id }
+    _relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_customs.sort.first.id) }
+  end
 end

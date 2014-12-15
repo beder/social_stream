@@ -6,6 +6,7 @@ class AddRejectRelation < ActiveRecord::Migration
 
     Tie.
       includes(:relation, :contact, :sender).
+      references(:relations).
       merge(Relation.where(:type => 'Relation::Public')).
       each do |t|
         if t.contact.ties_count != 1
@@ -19,6 +20,7 @@ class AddRejectRelation < ActiveRecord::Migration
   def down
     Tie.
       includes(:relation, :contact).
+      references(:relations).
       merge(Relation.where(:type => 'Relation::Reject')).
       each do |t|
         t.update_attribute :relation_id, t.sender.relation_public.id

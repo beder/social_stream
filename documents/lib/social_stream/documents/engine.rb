@@ -5,9 +5,7 @@ module SocialStream
       initializer "social_stream-documents.register_mime_types" do
         # Documents
         Mime::Type.register "text/plain", :txt
-        Mime::Type.register "application/zip", :zip
         Mime::Type.register "application/x-rar", :rar
-        Mime::Type.register "application/pdf", :pdf
         Mime::Type.register "application/postscript", :ps, [ "application/ps" ]
         Mime::Type.register "application/vnd.oasis.opendocument.text", :odt
         Mime::Type.register "application/vnd.oasis.opendocument.presentation", :odp
@@ -17,19 +15,44 @@ module SocialStream
         Mime::Type.register "application/vnd.ms-excel", :xls, [ "application/msexcel" ]
         Mime::Type.register "application/rtf", :rtf
         Mime::Type.register "application/vnd.scribus", :sla
-
+        # These are already defined in Rails 3.2
+        unless defined? Mime::ZIP
+          Mime::Type.register "application/zip", :zip
+        end
+        unless defined? Mime::PDF
+          Mime::Type.register "application/pdf", :pdf
+        end
+       
         # Picture
-        Mime::Type.register "image/jpeg", :jpeg, ["image/pjpeg","image/jpg"]
-        Mime::Type.register "image/gif",  :gif
-        Mime::Type.register "image/png",  :png,  [ "image/x-png" ]
-        Mime::Type.register "image/bmp",  :bmp
         Mime::Type.register "image/x-xcf", :xcf
-
+        # These are already defined in Rails 3.2
+        unless defined? Mime::JPEG
+          Mime::Type.register "image/jpeg", :jpeg, ["image/pjpeg","image/jpg"]
+        end
+        unless defined? Mime::GIF
+          Mime::Type.register "image/gif",  :gif
+        end
+        unless defined? Mime::PNG
+          Mime::Type.register "image/png",  :png,  [ "image/x-png" ]
+        end
+        unless defined? Mime::BMP
+          Mime::Type.register "image/bmp",  :bmp, [ "image/x-ms-bmp" ]
+        else
+          # Manually register synonym
+          Mime::BMP.instance_variable_get("@synonyms") << "image/x-ms-bmp"
+          Mime::LOOKUP["image/x-ms-bmp"] = Mime::BMP
+        end
+        
         # Audio
         Mime::Type.register "audio/x-wav", :wav, [ "audio/wav" ]
-        Mime::Type.register "audio/mpeg", :mpeg
+        
         Mime::Type.register "audio/x-vorbis+ogg", :ogg, [ "application/ogg" ]
-
+        # These are already defined in Rails 3.2
+        # MPEG is currently reserved to 'video/mpeg'
+        unless defined? Mime::MP3
+          Mime::Type.register "audio/mpeg", :mp3
+        end
+        
         # Video
         Mime::Type.register "video/x-flv", :flv
       end

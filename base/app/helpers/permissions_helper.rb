@@ -9,8 +9,8 @@ module PermissionsHelper
 
   def default_permissions
     @default_permissions ||=
-      DEFAULT_PERMISSIONS.map{ |p|
-        Permission.find_or_create_by_action_and_object *p
+      DEFAULT_PERMISSIONS.map{ |a,o|
+        Permission.find_or_create_by(action: a, object: o)
       }
   end
 end

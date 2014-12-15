@@ -7,13 +7,13 @@ describe CommentsController do
 
   describe "authorizing" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
       sign_in @user
     end
 
     describe "comment from user" do
       before do
-        activity = Factory(:self_activity, :contact => Factory(:self_contact, :sender => @user.actor))
+        activity = create(:self_activity, :contact => create(:self_contact, :sender => @user.actor))
         contact = @user.contact_to!(@user)
 
         model_attributes[:_contact_id] = contact.id
@@ -36,8 +36,8 @@ describe CommentsController do
 
     describe "comment to friend" do
       before do
-        f = Factory(:friend, :contact => Factory(:contact, :receiver => @user.actor)).sender
-        activity = Factory(:self_activity, :contact => f.contact_to!(f))
+        f = create(:friend, :contact => create(:contact, :receiver => @user.actor)).sender
+        activity = create(:self_activity, :contact => f.contact_to!(f))
         contact = @user.contact_to!(f)
 
         model_attributes[:_contact_id] = contact.id
@@ -49,8 +49,8 @@ describe CommentsController do
 
     describe "post to acquaintance" do
       before do
-        a = Factory(:acquaintance, :contact => Factory(:contact, :receiver => @user.actor)).sender
-        activity = Factory(:self_activity, :contact => a.contact_to!(a))
+        a = create(:acquaintance, :contact => create(:contact, :receiver => @user.actor)).sender
+        activity = create(:self_activity, :contact => a.contact_to!(a))
         contact = @user.contact_to!(a)
 
         model_attributes[:_contact_id] = contact.id

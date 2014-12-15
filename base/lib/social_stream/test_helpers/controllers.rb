@@ -13,10 +13,10 @@ module SocialStream
           model_class.to_s.underscore.to_sym
       end
 
-      # Factory.attributes_for(:post) for PostsController
+      # FactoryGirl.attributes_for(:post) for PostsController
       def model_attributes
         @model_attributes ||=
-          Factory.attributes_for(model_sym)
+          FactoryGirl.attributes_for(model_sym)
       end
 
       def attributes
@@ -79,14 +79,12 @@ module SocialStream
 
       shared_examples_for "Deny Updating" do
         it "should not update" do
+          @current_model.class.any_instance.should_not_receive(:update_attributes)
+          
           begin
             put :update, updating_attributes
           rescue CanCan::AccessDenied
           end
-
-          resource = assigns(model_sym)
-
-          resource.should_not_receive(:update_attributes)
         end
       end
 

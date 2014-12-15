@@ -1,7 +1,22 @@
+# compatibility gems
+require 'actionpack/action_caching'
+require 'actionpack/page_caching'
+require 'actionpack/xml_parser'
+require 'actionview-encoded_mail_to'
+require 'activerecord/session_store'
+require 'active_resource'
+# require 'protected_attributes'
+require 'rails-observers'
+require 'rails-perftest'
+
+require 'route_translator'
+
 # Database foreign keys
 require 'foreigner'
 # jQuery
 require 'jquery-rails'
+# jQuery
+require 'jquery-ui-rails'
 # Permalinks:
 require 'stringex'
 # Hierarchical relationships in Activity and Relation:
@@ -23,10 +38,13 @@ require 'avatars_for_rails'
 # Pagination
 require 'kaminari'
 # Oauth
-require 'omniauth/oauth'
+require 'omniauth'
+require 'omniauth-facebook'
+require 'omniauth-twitter'
+require 'omniauth-linkedin'
 #Tags
 require 'acts-as-taggable-on'
-require 'acts_as_taggable_on/social_stream'
+# require 'acts_as_taggable_on/social_stream'
 # HTML forms
 require 'formtastic'
 #Background tasks
@@ -71,7 +89,7 @@ module SocialStream
 
   mattr_accessor :devise_modules
   @@devise_modules = [ :database_authenticatable, :registerable, :recoverable,
-                       :rememberable, :trackable, :omniauthable, :token_authenticatable]
+                       :rememberable, :trackable, :omniauthable]
 
   mattr_writer :objects
   @@objects = [ :post, :comment ]

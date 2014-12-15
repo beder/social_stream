@@ -1,43 +1,63 @@
-Factory.define :tie do |t|
-  t.association :contact
-end
+FactoryGirl.define do
 
-# User ties
+  factory :tie do
+    association :contact
 
-Factory.define :friend, :parent => :tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_custom('friend') }
-end
+    # User ties
 
-Factory.define :acquaintance, :parent => :tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_custom('acquaintance') }
-end
+    factory :friend do
+      after(:build) do |u, e| 
+        u.relation = u.sender.relation_custom('friend') 
+        end
+    end
 
-Factory.define :public, :parent => :tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_public }
-end
+    factory :acquaintance do
+      after(:build) do |u, e| 
+        u.relation = u.sender.relation_custom('acquaintance') 
+        end
+    end
 
-Factory.define :reject, :parent => :tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_reject }
-end
+    factory :public do
+      after(:build) do |u, e| 
+        u.relation = u.sender.relation_public 
+        end
+    end
 
-# Group ties
-Factory.define :g2u_tie, :parent => :tie do |t|
-  t.contact { |c| Factory(:group_contact) }
-end
+    factory :reject do
+      after(:build) do |u, e| 
+        u.relation = u.sender.relation_reject 
+        end
+    end
 
-Factory.define :member, :parent => :g2u_tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_custom('member') }
-end
+    # Group ties
+    factory :g2u_tie do
+      contact { |c| create(:group_contact) }
+      factory :member do
+        after(:build) do |u, e| 
+          u.relation = u.sender.relation_custom('member') 
+        end
+      end
 
-Factory.define :g2g_tie, :parent => :tie do |t|
-  t.contact { |c| Factory(:g2g_contact) }
-end
+    end
 
-Factory.define :partner, :parent => :g2g_tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_custom('partner') }
-end
+    factory :g2g_tie do
+      contact { |c| create(:g2g_contact) }
 
-Factory.define :group_public, :parent => :g2g_tie do |t|
-  t.after_build { |u| u.relation = u.sender.relation_public }
+      factory :partner do
+        after(:build) do |u, e| 
+          u.relation = u.sender.relation_custom('partner') 
+        end
+      end
+
+      factory :group_public do
+        after(:build) do |u, e| 
+          u.relation = u.sender.relation_public 
+        end
+      end
+    end
+  end
+
+
+
 end
 

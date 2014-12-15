@@ -1,5 +1,6 @@
 class Profile < ActiveRecord::Base
-  belongs_to :actor
+  
+  belongs_to :actor, :inverse_of=>:profile
     
   accepts_nested_attributes_for :actor
   

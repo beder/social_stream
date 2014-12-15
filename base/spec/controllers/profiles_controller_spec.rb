@@ -6,7 +6,7 @@ describe ProfilesController do
 
   context "for a user" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
       sign_in @user
     end
 
@@ -24,7 +24,7 @@ describe ProfilesController do
 
     it "should not render others edit" do
       begin
-        get :edit, :user_id => Factory(:user).to_param
+        get :edit, :user_id => create(:user).to_param
 
         assert false
       rescue CanCan::AccessDenied
@@ -40,7 +40,7 @@ describe ProfilesController do
 
     it "should not update other's" do
       begin
-        put :update, :user_id => Factory(:user).to_param, :profile => { :organization => "Social Stream" }
+        put :update, :user_id => create(:user).to_param, :profile => { :organization => "Social Stream" }
 
         assert false
       rescue CanCan::AccessDenied
@@ -52,7 +52,7 @@ describe ProfilesController do
 
   context "for a group" do
     before do
-      membership = Factory(:member)
+      membership = create(:member)
       @group = membership.sender_subject
       @user  = membership.receiver_subject
 
@@ -74,7 +74,7 @@ describe ProfilesController do
 
     it "should not render others edit" do
       begin
-        get :edit, :group_id => Factory(:group).to_param
+        get :edit, :group_id => create(:group).to_param
 
         assert false
       rescue CanCan::AccessDenied
@@ -90,7 +90,7 @@ describe ProfilesController do
 
     it "should not update other's" do
       begin
-        put :update, :group_id => Factory(:group).to_param, :profile => { :organization => "Social Stream" }
+        put :update, :group_id => create(:group).to_param, :profile => { :organization => "Social Stream" }
 
         assert false
       rescue CanCan::AccessDenied

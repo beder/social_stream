@@ -1,20 +1,25 @@
-Factory.define :picture do |p|
-  p.file { Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), 'files', 'rails.png'),
-                                       'image/png') }
+FactoryGirl.define do
 
-  p._contact_id { Factory(:friend).contact_id }
-  p._relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_customs.sort.first.id) }
-end
+  factory :picture do
+    file { Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), 'files', 'rails.png'),
+                                         'image/png') }
 
-Factory.define :public_picture, :parent => :picture do |p|
-  p._contact_id { Factory(:self_contact).id }
-  p._relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_public.id) }
-end
+    _contact_id { create(:friend).contact_id }
+    _relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_customs.sort.first.id) }
 
-Factory.define :private_picture, :parent => :picture do |p|
-  p.file { Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), 'files', 'privado.png'),
-                                       'image/png') }
-  p._contact_id { Factory(:self_contact).id }
-  p._relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_customs.sort.first.id) }
+    factory :public_picture, :parent => :picture do
+      _contact_id { create(:self_contact).id }
+      _relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_public.id) }
+    end
+
+    factory :private_picture, :parent => :picture do
+      file { Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), 'files', 'privado.png'),
+                                           'image/png') }
+      _contact_id { create(:self_contact).id }
+      _relation_ids { |q| Array(Contact.find(q._contact_id).sender.relation_customs.sort.first.id) }
+    end
+  end
+
+
 end
 

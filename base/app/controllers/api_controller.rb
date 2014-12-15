@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
-  
+  include TokenAuthenticate
+
   before_filter :authenticate_user!, :only => [:create_key, :users]#, :activity_atom_feed]
   
   def create_key

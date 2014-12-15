@@ -5,7 +5,7 @@ describe SettingsController do
   render_views
 
   before do
-    @user = Factory(:user)
+    @user = create(:user)
     @actor = @user.actor
     sign_in @user
   end

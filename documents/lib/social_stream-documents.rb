@@ -23,3 +23,4 @@ end
 #require 'paperclip_processors/ffmpeg'
 require 'paperclip-ffmpeg'
 require 'social_stream/documents/engine'
+require 'social_stream/patch_paperclip'

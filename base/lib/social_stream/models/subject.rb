@@ -29,20 +29,20 @@ module SocialStream
                    :validate => true,
                    :autosave => true,
                    :dependent => :destroy
-        
+
         has_one :profile, :through => :actor
         
         validates_presence_of :name
         
         accepts_nested_attributes_for :profile
         
-        scope :alphabetic, joins(:actor).merge(Actor.alphabetic)
+        scope :alphabetic, -> { joins(:actor).merge(Actor.alphabetic) }
 
-        scope :letter, lambda{ |param|
+        scope :letter, lambda { |param|
           joins(:actor).merge(Actor.letter(param))
         }
 
-        scope :name_search, lambda{ |param|
+        scope :name_search, lambda { |param|
           joins(:actor).merge(Actor.name_search(param))
         }
         
@@ -52,14 +52,14 @@ module SocialStream
           end
         }
 
-        scope :distinct_initials, joins(:actor).merge(Actor.distinct_initials)
+        scope :distinct_initials, -> { joins(:actor).merge(Actor.distinct_initials) }
 
-        scope :followed, lambda { 
+        scope :followed, -> { 
           joins(:actor).
             order("actors.follower_count DESC")
         }
 
-        scope :liked, lambda { 
+        scope :liked, -> { 
           joins(:actor => :activity_object).
             order('activity_objects.like_count DESC')
         }
@@ -72,16 +72,8 @@ module SocialStream
           end
         }
   
-        define_index do
-          indexes actor.name, :sortable => true
-          indexes actor.email
-          indexes actor.slug
-                
-          has created_at
-        end
       end
       
-      module InstanceMethods
         def actor!
           actor || build_actor(:subject_type => self.class.to_s)
         end
@@ -105,11 +97,10 @@ module SocialStream
         def respond_to? *args
           super || actor!.respond_to?(*args)
         end
-      end
       
       module ClassMethods
         def find_by_slug(perm)
-          includes(:actor).where('actors.slug' => perm).first
+          includes(:actor).references(:actors).where('actors.slug' => perm).first
         end
         
         def find_by_slug!(perm)

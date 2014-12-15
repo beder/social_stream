@@ -9,7 +9,7 @@ describe PostsController do
 
   describe "authorizing" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
       sign_in @user
     end
 
@@ -19,7 +19,7 @@ describe PostsController do
           contact = @user.contact_to!(@user)
           relation = @user.relation_customs.sort.first
           model_assigned_to @user.contact_to!(@user), relation
-          @current_model = Factory(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
+          @current_model = create(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
         end
 
         it_should_behave_like "Allow Creating"
@@ -31,7 +31,7 @@ describe PostsController do
           contact = @user.contact_to!(@user)
           relation = @user.relation_customs.sort.last
           model_assigned_to @user.contact_to!(@user), relation
-          @current_model = Factory(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
+          @current_model = create(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
         end
 
         it_should_behave_like "Allow Creating"
@@ -43,7 +43,7 @@ describe PostsController do
           contact = @user.contact_to!(@user)
           relation = @user.relation_public
           model_assigned_to @user.contact_to!(@user), relation
-          @current_model = Factory(:post, :_contact_id => contact.id)
+          @current_model = create(:post, :_contact_id => contact.id)
         end
 
         it_should_behave_like "Allow Creating"
@@ -53,7 +53,7 @@ describe PostsController do
 
     describe "post to friend" do
       before do
-        friend = Factory(:friend, :contact => Factory(:contact, :receiver => @user.actor)).sender
+        friend = create(:friend, :contact => create(:contact, :receiver => @user.actor)).sender
 
         model_assigned_to @user.contact_to!(friend), friend.relation_custom('friend')
       end
@@ -63,7 +63,7 @@ describe PostsController do
 
     describe "post to acquaintance" do
       before do
-        ac = Factory(:acquaintance, :contact => Factory(:contact, :receiver => @user.actor)).sender
+        ac = create(:acquaintance, :contact => create(:contact, :receiver => @user.actor)).sender
 
         model_assigned_to @user.contact_to!(ac), ac.relation_custom('acquaintance')
       end
@@ -73,7 +73,7 @@ describe PostsController do
 
     describe "posts represented group" do
       before do
-        @group = Factory(:member, :contact => Factory(:group_contact, :receiver => @user.actor)).sender_subject
+        @group = create(:member, :contact => create(:group_contact, :receiver => @user.actor)).sender_subject
       end
 
       describe "with member relation" do
@@ -82,7 +82,7 @@ describe PostsController do
           relation = @group.relation_custom('member')
 
           model_assigned_to contact, relation
-          @current_model = Factory(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
+          @current_model = create(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
         end
 
         it_should_behave_like "Allow Creating"
@@ -99,7 +99,7 @@ describe PostsController do
             contact = @group.contact_to!(@group)
             relation = @group.relation_customs.sort.first
             model_assigned_to contact, relation
-            @current_model = Factory(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
+            @current_model = create(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
           end
 
           it_should_behave_like "Allow Creating"
@@ -111,7 +111,7 @@ describe PostsController do
             contact = @group.contact_to!(@group)
             relation = @group.relation_customs.sort.last
             model_assigned_to contact, relation
-            @current_model = Factory(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
+            @current_model = create(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
           end
 
           it_should_behave_like "Allow Creating"
@@ -123,7 +123,7 @@ describe PostsController do
             contact = @group.contact_to!(@group)
             relation = @group.relation_public
             model_assigned_to contact, relation
-            @current_model = Factory(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
+            @current_model = create(:post, :_contact_id => contact.id, :_relation_ids => Array(relation.id))
           end
 
           it_should_behave_like "Allow Creating"
@@ -135,7 +135,7 @@ describe PostsController do
 
   context "creating post in group's wall" do
     before do
-      @tie = Factory(:member)
+      @tie = create(:member)
     end
 
     it "should assign activity to member" do
@@ -154,7 +154,7 @@ describe PostsController do
 
   context "creating public post" do
     before do
-      @post = Factory(:public_post)
+      @post = create(:public_post)
     end
 
     it "should render" do
