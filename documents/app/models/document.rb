@@ -6,23 +6,13 @@ class Document < ActiveRecord::Base
   STYLE_FORMAT = {"webm" =>"webm", "flv"=>"flv", "thumb"=>"png", "thumb0"=>"png", "webma"=>"webm"}
 
   STYLE_MIMETYPE = {"webm" =>"video/webm", "flv"=>"video/x-flv", "thumb"=>"image/png", "thumb0"=>"image/png", "mp3"=>"audio/mpeg", "webma"=>"audio/webm"}
-
-  has_attached_file :file, 
+  
+  
+  has_attached_file :file,
                     :url => '/:class/:id.:extension',
                     :path => ':rails_root/documents/:class/:id_partition/:style.:extension'
-  
+
   validates_attachment_presence :file
-  
-  define_index do
-    indexes title
-    indexes file_file_name, :as => :file_name
-    indexes description
-    indexes activity_object.tags.name, :as => :tags
-    
-    where "type IS NULL"
-    
-    has created_at
-  end
   
   class << self 
     def new(*args)

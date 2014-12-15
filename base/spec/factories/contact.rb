@@ -1,16 +1,21 @@
-Factory.define :contact do |c|
-  c.sender   { |s| Factory(:user).actor }
-  c.receiver { |r| Factory(:user).actor }
-end
+FactoryGirl.define do
 
-Factory.define :self_contact, :parent => :contact do |c|
-  c.receiver { |d| d.sender }
-end
+  factory :contact do
+    sender   { |s| create(:user).actor }
+    receiver { |r| create(:user).actor }
 
-Factory.define :group_contact, :parent => :contact do |g|
-  g.sender { |s| Factory(:group).actor }
-end
+    factory :self_contact do
+      receiver { |d| d.sender }
+    end
 
-Factory.define :g2g_contact, :parent => :group_contact do |g|
-  g.receiver { |r| Factory(:group).actor }
+    factory :group_contact do
+      sender { |s| create(:group).actor }
+
+      factory :g2g_contact do
+        receiver { |r| create(:group).actor }
+      end
+    end
+
+  end
+
 end

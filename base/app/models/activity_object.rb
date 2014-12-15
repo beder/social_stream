@@ -1,3 +1,5 @@
+require 'social_stream/dependent_destroyer'
+
 # The {ActivityObject} is any object that receives actions. Examples are
 # creating post, liking a comment, contacting a user. 
 #
@@ -14,7 +16,8 @@ class ActivityObject < ActiveRecord::Base
 
   acts_as_taggable
   
-  has_many :activity_object_activities, :dependent => :destroy
+  has_many :activity_object_activities, :inverse_of=>:activity_object, :dependent => :destroy
+  
   has_many :activities, :through => :activity_object_activities
 
   # The object of this activity object

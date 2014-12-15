@@ -7,14 +7,14 @@ describe PermissionsController do
 
   describe "when authenticated" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
 
       sign_in @user
     end
 
     context "with an existing relation" do
       before do
-        @relation = Factory(:relation_custom, :actor_id => @user.actor_id)
+        @relation = create(:relation_custom, :actor_id => @user.actor_id)
       end
 
       it "should render index" do
@@ -26,7 +26,7 @@ describe PermissionsController do
 
     context "a external relation" do
       before do
-        @relation = Factory(:relation_custom)
+        @relation = create(:relation_custom)
       end
 
       it "should not render index" do

@@ -13,7 +13,7 @@ describe InvitationsController do
 
   context "authenticated" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
 
       sign_in @user
     end

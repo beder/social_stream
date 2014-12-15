@@ -21,16 +21,22 @@ class Contact < ActiveRecord::Base
              :class_name => "Contact"
 
   belongs_to :sender,
+             :inverse_of => :sent_contacts,
              :class_name => "Actor"
+             
   belongs_to :receiver,
+             :inverse_of => :received_contacts,
              :class_name => "Actor"
 
   has_many :ties,
+           :inverse_of => :contact,
            :dependent => :destroy
+           
   has_many :relations,
            :through => :ties
 
   has_many :activities,
+           :inverse_of => :contact,
            :dependent => :destroy
 
   scope :sent_by, lambda { |a|
@@ -46,24 +52,25 @@ class Contact < ActiveRecord::Base
           or(arel_table[:receiver_id].eq(Actor.normalize_id(a))))
   }
 
-  scope :recent, order("contacts.created_at DESC")
+  scope :recent, -> { order("contacts.created_at DESC") }
 
-  scope :active, where(arel_table[:ties_count].gt(0))
+  scope :active, -> { where(arel_table[:ties_count].gt(0)) }
 
-  scope :positive, lambda {
+  scope :positive, -> {
     select("DISTINCT contacts.*").
       joins(:relations).
       merge(Relation.where(:type => Relation.positive_names))
   }
 
-  scope :not_reflexive, where(arel_table[:sender_id].not_eq(arel_table[:receiver_id]))
+  scope :not_reflexive, -> { where(arel_table[:sender_id].not_eq(arel_table[:receiver_id])) }
 
-  scope :pending, active.
-                  not_reflexive.
-                  joins("LEFT JOIN contacts AS inverse_contacts ON inverse_contacts.id = contacts.inverse_id").
-                  where(arel_table[:inverse_id].eq(nil).or(arel_table.alias("inverse_contacts")[:ties_count].eq(0)))
+  scope :pending, -> { active.
+                       not_reflexive.
+                       joins("LEFT JOIN contacts AS inverse_contacts ON inverse_contacts.id = contacts.inverse_id").
+                       where(arel_table[:inverse_id].eq(nil).or(arel_table.alias("inverse_contacts")[:ties_count].eq(0)))
+                     }
 
-  scope :not_rejected, lambda { 
+  scope :not_rejected, -> { 
     select("distinct contacts.*").joins(:relations).merge(Relation.where(["type != ?", 'Relation::Reject']))
   }
 
@@ -117,11 +124,11 @@ class Contact < ActiveRecord::Base
   end
 
   # The {ActivityVerb} corresponding to this {Contact}. If this contact is pending,
-  # the other one was establised already, so this is going to "make-friend".
+  # the other one was establised already, so this is going to "make_friend".
   # If it is not pending, the contact in the other way was not established, so this
   # is following
   def verb
-    replied? ? "make-friend" : "follow"
+    replied? ? "make_friend" : "follow"
   end
 
   # has_many collection=objects method does not trigger destroy callbacks,

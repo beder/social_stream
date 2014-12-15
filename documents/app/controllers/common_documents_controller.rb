@@ -1,7 +1,9 @@
 class CommonDocumentsController < InheritedResources::Base
-  belongs_to_subjects :optional => true
-
   before_filter :profile_subject!, :only => :index
+
+  SocialStream.subjects.each do |subj|
+    belongs_to subj, { :polymorphic => true, :finder => :find_by_slug!, :optional => true }
+  end
 
   load_and_authorize_resource :except => :index
 

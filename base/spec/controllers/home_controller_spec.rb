@@ -14,7 +14,7 @@ describe HomeController do
 
   describe "when authenticated" do
     before do
-      sign_in Factory(:user)
+      sign_in create(:user)
     end
 
     it "should render" do
@@ -26,7 +26,7 @@ describe HomeController do
 
     describe "when representing" do
       before do
-        @represented = represent(Factory(:group))
+        @represented = represent(create(:group))
       end
 
       it "should render represented home" do

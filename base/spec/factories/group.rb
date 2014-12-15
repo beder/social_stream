@@ -1,4 +1,8 @@
-Factory.define :group do |g|
-  g.sequence(:name) { |n| "Group #{ n }" }
-  g._contact_id { |g| Factory(:user).ego_contact.id }
+FactoryGirl.define do
+  sequence(:group_seq) { |n| n }
+  
+  factory :group do
+    name { "Group #{ generate(:group_seq) }" }
+    _contact_id { |g| create(:user).ego_contact.id }
+  end
 end

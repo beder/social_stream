@@ -27,15 +27,18 @@ class Relation < ActiveRecord::Base
   Positive = %w{ custom public }
   Negative = %w{ reject }
 
-  belongs_to :actor
+  belongs_to :actor, :inverse_of=>:relations
 
-  has_many :relation_permissions, :dependent => :destroy
+  has_many :relation_permissions, :inverse_of=>:relation, :dependent => :destroy
+  
   has_many :permissions, :through => :relation_permissions
 
-  has_many :ties, :dependent => :destroy
+  has_many :ties, :inverse_of=>:relation, :dependent => :destroy
+  
   has_many :contacts, :through => :ties
 
-  has_many :audiences, :dependent => :destroy
+  has_many :audiences, :inverse_of=>:relation, :dependent => :destroy
+  
   has_many :activities, :through => :audiences
 
   validates_presence_of :actor_id

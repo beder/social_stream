@@ -6,7 +6,7 @@ describe Relation::CustomsController do
   describe "when Anonymous" do
     context "faking a new relation" do
       it "should not create" do
-        post :create, :custom => Factory.attributes_for(:relation_custom)
+        post :create, :custom => FactoryGirl.attributes_for(:relation_custom)
 
         response.should redirect_to(:new_user_session)
       end
@@ -14,7 +14,7 @@ describe Relation::CustomsController do
 
     context "an existing relation" do
       before do
-        @relation = Factory(:relation_custom)
+        @relation = create(:relation_custom)
       end
 
       it "should not update" do
@@ -42,7 +42,7 @@ describe Relation::CustomsController do
 
   describe "when authenticated" do
     before do
-      @user = Factory(:user)
+      @user = create(:user)
 
       sign_in @user
     end
@@ -69,12 +69,13 @@ describe Relation::CustomsController do
 
     context "a new fake relation" do
       it "should not be created" do
-        actor = Factory(:user).actor
+        actor = create(:user).actor
         count = Relation.count
-	begin
+	      begin
           post :create, :custom => { :name => 'Test', :actor_id => actor.id }
 
-          assert false
+          assigns(:custom).should_not be_new_record
+          assigns(:custom).actor_id.should eq(@user.actor_id)
         rescue CanCan::AccessDenied
           assigns(:custom).should be_new_record
 
@@ -85,7 +86,7 @@ describe Relation::CustomsController do
 
     context "a existing own relation" do
       before do
-        @relation = Factory(:relation_custom, :actor => @user.actor)
+        @relation = create(:relation_custom, :actor => @user.actor)
       end
 
       it "should allow updating" do
@@ -111,7 +112,7 @@ describe Relation::CustomsController do
 
     context "a external relation" do
       before do
-        @relation = Factory(:relation_custom)
+        @relation = create(:relation_custom)
       end
 
       it "should not allow updating" do

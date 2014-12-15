@@ -9,7 +9,7 @@ SocialStream.setup do |config|
   # :confirmable, :lockable, :timeoutable, :validatable
   # config.devise_modules = :database_authenticatable, :registerable,
   #                         :recoverable, :rememberable, :trackable,
-  #                         :omniauthable, :token_authenticatable
+  #                         :omniauthable
   
   # Type of activities managed by actors
   # Remember you must add an "activity_object_id" foreign key column to your migration!

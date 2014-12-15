@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Profile do
   context "belonging to a user" do
     before do
-      @profile = Factory(:user).profile
+      @profile = create(:user).profile
     end
 
     context "accessed by her" do
@@ -22,7 +22,7 @@ describe Profile do
 
     context "accessed by other" do
       before do
-        u = Factory(:user)
+        u = create(:user)
         @ability = Ability.new(u)
       end
 

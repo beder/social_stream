@@ -5,7 +5,7 @@ describe DocumentsController do
 
   context "with public document" do
     before do
-      @public_document = Factory(:public_document)      
+      @public_document = create(:public_document)      
     end
 
     describe "when not authenticated" do
@@ -21,8 +21,21 @@ describe DocumentsController do
         response.body.should =~ /small.pdf/
       end
       
-      it "should render receiver's show" do
+      it "should render show" do
         get :show, :id => @public_document.to_param
+        response.should be_success
+        response.headers["Content-Type"].should include('text/html')
+        response.body.should include(download_document_path(@public_document))
+      end
+      
+      it "should render the file content" do
+        get :show, :id => @public_document.to_param, :format=>:pdf
+        response.should be_success
+        response.headers["Content-Type"].should include('application/pdf')
+      end
+
+      it "should download the file" do
+        get :download, :id => @public_document.to_param
         response.should be_success
         response.headers["Content-Type"].should include('application/pdf')
       end
@@ -30,7 +43,7 @@ describe DocumentsController do
     
     describe "when authenticated" do
       before do
-        sign_in Factory(:user)
+        sign_in create(:user)
       end
 
       it "should render index" do
@@ -43,6 +56,19 @@ describe DocumentsController do
       it "should render show" do
         get :show, :id => @public_document.to_param
         response.should be_success
+        response.headers["Content-Type"].should include('text/html')
+        response.body.should include(download_document_path(@public_document))
+      end
+
+      it "should render the file content" do
+        get :show, :id => @public_document.to_param, :format=>:pdf
+        response.should be_success
+        response.headers["Content-Type"].should include('application/pdf')
+      end
+
+      it "should download the file" do
+        get :download, :id => @public_document.to_param
+        response.should be_success
         response.headers["Content-Type"].should include('application/pdf')
       end
     end
@@ -50,7 +76,7 @@ describe DocumentsController do
   
   context "with private document" do
     before do     
-      @private_document = Factory(:private_document)
+      @private_document = create(:private_document)
     end
     describe "when not authenticated" do
       it "should render receiver's index without private document" do
@@ -63,7 +89,7 @@ describe DocumentsController do
     
     describe "when authenticated" do
       before do
-        sign_in Factory(:user)
+        sign_in create(:user)
       end
       it "should render index" do
         get :index, :user_id => @private_document.post_activity.receiver.to_param  

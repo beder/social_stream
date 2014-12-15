@@ -7,11 +7,12 @@ module SocialStream
       extend ActiveSupport::Concern
 
       included do
+        after_destroy :remove_associated_objects
         attr_accessor :_contact_id
         attr_writer   :_relation_ids
         attr_accessor :_activity_parent_id
 
-        belongs_to :activity_object, :dependent => :destroy, :autosave => true
+        belongs_to :activity_object, :autosave => true
         has_many   :activity_object_activities, :through => :activity_object
 
         delegate :post_activity,
@@ -54,13 +55,13 @@ module SocialStream
                        :relation_ids => Array(_relation_ids)
         end
 
-	# before_create callback
-	#
+	      # before_create callback
+	      #
         # Build corresponding ActivityObject including this class type
         def create_activity_object_with_type #:nodoc:
           o = create_activity_object! :object_type => self.class.to_s
-	  # WEIRD: Rails 3.1.0.rc3 does not assign activity_object_id
-	  self.activity_object_id = o.id
+	        # WEIRD: Rails 3.1.0.rc3 does not assign activity_object_id
+	        self.activity_object_id = o.id
         end
 
         def _contact
@@ -100,7 +101,25 @@ module SocialStream
         end
 
         private
-
+        
+        def remove_associated_objects
+          if self.post_activity
+            begin
+              self.post_activity.reload
+              self.post_activity.destroy if self.post_activity
+            rescue ActiveRecord::RecordNotFound => e
+              nil
+            end
+          end
+          if self.activity_object
+            begin
+              self.activity_object.reload
+              self.activity_object.destroy if self.activity_object
+            rescue ActiveRecord::RecordNotFound => e
+              nil
+            end
+          end
+        end
         def create_post_activity
           create_activity "post"
         end

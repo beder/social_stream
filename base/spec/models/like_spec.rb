@@ -4,7 +4,7 @@ describe Like do
 
   describe "activity" do
     before do
-      @like_activity = Factory(:like_activity)
+      @like_activity = create(:like_activity)
       @activity = @like_activity.parent
     end
 
@@ -13,7 +13,7 @@ describe Like do
     end
 
     it "should not recognize the user who does not like it" do
-      assert ! @activity.liked_by?(Factory(:user))
+      assert ! @activity.liked_by?(create(:user))
     end
   end
 
@@ -47,7 +47,7 @@ describe Like do
 
     context "friend" do
       before do
-        tie = Factory(:friend)
+        tie = create(:friend)
         @sender = tie.sender
         @receiver = tie.receiver
       end
@@ -57,7 +57,7 @@ describe Like do
 
     context "alien" do
       before do
-        @sender, @receiver = 2.times.map{ Factory(:user) }
+        @sender, @receiver = 2.times.map{ create(:user) }
       end
 
       it_should_behave_like "creates activity"

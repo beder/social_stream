@@ -5,7 +5,7 @@ describe PicturesController do
 
   context "with public picture" do
     before do
-      @public_picture = Factory(:public_picture)      
+      @public_picture = create(:public_picture)      
     end
 
     describe "when not authenticated" do
@@ -24,13 +24,19 @@ describe PicturesController do
       it "should render receiver's show" do
         get :show, :id => @public_picture.to_param
         response.should be_success
+        response.headers["Content-Type"].should include('text/html')
+      end
+
+      it "should render receiver's content" do
+        get :show, :id => @public_picture.to_param, :format=>:png
+        response.should be_success
         response.headers["Content-Type"].should include('image/png')
       end
     end
     
     describe "when authenticated" do
       before do
-        sign_in Factory(:user)
+        sign_in create(:user)
       end
 
       it "should render index" do
@@ -43,6 +49,12 @@ describe PicturesController do
       it "should render show" do
         get :show, :id => @public_picture.to_param
         response.should be_success
+        response.headers["Content-Type"].should include('text/html')
+      end
+
+      it "should render content" do
+        get :show, :id => @public_picture.to_param, :format=>:png
+        response.should be_success
         response.headers["Content-Type"].should include('image/png')
       end
     end
@@ -50,7 +62,7 @@ describe PicturesController do
   
   context "with private picture" do
     before do     
-      @private_picture = Factory(:private_picture)
+      @private_picture = create(:private_picture)
     end
     describe "when not authenticated" do
       it "should render receiver's index without private picture" do
@@ -63,7 +75,7 @@ describe PicturesController do
     
     describe "when authenticated" do
       before do
-        sign_in Factory(:user)
+        sign_in create(:user)
       end
       it "should render index" do
         get :index, :user_id => @private_picture.post_activity.receiver.to_param  

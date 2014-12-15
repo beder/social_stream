@@ -23,12 +23,29 @@ module SocialStream
         #
         def belongs_to_subjects(options = {})
           opts = { :polymorphic => true, :finder => :find_by_slug! }.update(options)
+          
+          SocialStream.subjects.each do |subj|
+            belongs_to subj, opts
+          end
 
-          args = SocialStream.subjects + [ opts ]
-
-          belongs_to *args
+        end
+        
+        def load_objects_for(what)
+          before_filter do |controller| 
+            controller.load_objects(what)
+          end
         end
       end
+
+        def load_objects(what)
+          SocialStream.subjects.each do |subj|
+            next if params[:"#{subj}_id"].blank?
+            klass = subj.to_s.classify.constantize
+            subj_inst = klass.find_by_slug!(params[:"#{subj}_id"])
+            instance_variable_set("@#{subj}", subj_inst)
+            instance_variable_set("@#{what}", subj_inst.profile) unless instance_variable_get("@#{what}")
+          end
+        end
 
         # Current subject represented by the user. Defaults to the own user
         def current_subject
@@ -71,12 +88,12 @@ module SocialStream
         #
         #
         def profile_subject
-          @profile_subject ||= association_chain[-1] || current_subject
+          @profile_subject ||= find_profile_subject || current_subject
         end
 
         # Go to sign in page if {#profile_subject} is blank
         def profile_subject!
-          @profile_subject ||= association_chain[-1] || warden.authenticate!
+          @profile_subject ||= find_profile_subject || warden.authenticate!
         end
 
         # A {User} must be logged in and is equal to {#profile_subject}
@@ -116,6 +133,20 @@ module SocialStream
           return unless session[:subject_type].present? && session[:subject_id].present?
 
           session[:subject_type].constantize.find session[:subject_id]
+        end
+        
+        def find_profile_subject
+          SocialStream.subjects.each do |subj|
+            id = params["#{ subj }_id"]
+
+            next if id.blank?
+
+            subject_class = subj.to_s.classify.constantize
+
+            return subject_class.find_by_slug! id
+          end
+
+          nil
         end
     end
   end

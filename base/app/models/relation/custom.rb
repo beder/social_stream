@@ -13,8 +13,6 @@ class Relation::Custom < Relation
   inspect
   has_ancestry
 
-  belongs_to :actor
-
   validates_presence_of :name, :actor_id
   validates_uniqueness_of :name, :scope => :actor_id
 
@@ -40,11 +38,9 @@ class Relation::Custom < Relation
                   :receiver_type => cfg_rel['receiver_type']
 
         if (ps = cfg_rel['permissions']).present?
-          ps.each do |p| 
-            p.push(nil) if p.size == 1
-
+          ps.each do |a, o| 
             rels[name].permissions << 
-              Permission.find_or_create_by_action_and_object(*p)
+              Permission.find_or_create_by(action: a, object: o)
           end 
         end
       end

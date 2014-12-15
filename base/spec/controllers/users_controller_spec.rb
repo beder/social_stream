@@ -11,14 +11,14 @@ describe UsersController do
     end
 
     it "should render show" do
-      get :show, :id => Factory(:friend, :receiver => Factory(:group).actor).sender_subject.to_param
+      get :show, :id => create(:friend, :receiver => create(:group).actor).sender_subject.to_param
 
       assert_response :success
     end
 
     context "with fans" do
       before do
-        @user = Factory(:fan_activity).receiver_subject
+        @user = create(:fan_activity).receiver_subject
       end
 
       it "should render show" do
@@ -29,7 +29,7 @@ describe UsersController do
     end
 
     it "should render show with public activity" do
-      activity = Factory(:public_activity)
+      activity = create(:public_activity)
 
       get :show, :id => activity.receiver.to_param
 
@@ -39,7 +39,7 @@ describe UsersController do
 
     it "should not render edit" do
       begin
-        get :edit, :id => Factory(:user).to_param
+        get :edit, :id => create(:user).to_param
 
         assert false
       rescue CanCan::AccessDenied 
@@ -50,7 +50,7 @@ describe UsersController do
 
   describe "when authenticated" do
     before do
-      @user = Factory(:friend, :receiver => Factory(:group).actor).sender_subject
+      @user = create(:friend, :receiver => create(:group).actor).sender_subject
 
       sign_in @user
     end
@@ -68,15 +68,15 @@ describe UsersController do
     end
 
     it "should render other's page" do
-      get :show, :id => Factory(:user).to_param
+      get :show, :id => create(:user).to_param
 
       assert_response :success
     end
 
     it "should render other's page with activity" do
-      tie = Factory(:friend, :receiver => @user.actor)
+      tie = create(:friend, :receiver => @user.actor)
       friend = tie.sender
-      Factory(:post, :_contact_id  => tie.contact_id,
+      create(:post, :_contact_id  => tie.contact_id,
                      :_relation_ids => Array(tie.relation_id))
 
       get :show, :id => friend.to_param
@@ -86,7 +86,7 @@ describe UsersController do
 
     it "should not render other's edit" do
       begin
-        get :edit, :id => Factory(:user).to_param
+        get :edit, :id => create(:user).to_param
 
         assert false
       rescue CanCan::AccessDenied 
