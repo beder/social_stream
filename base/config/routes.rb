@@ -70,13 +70,13 @@ Rails.application.routes.draw do
     resources object.to_s.pluralize
   end
   
-  ##API###
-  get 'api/keygen' => 'api#create_key', :as => :api_keygen
-  get 'api/user/:id' => 'api#users', :as => :api_user
-  get 'api/me' => 'api#users', :as => :api_me
-  get 'api/me/home/' => 'api#activity_atom_feed', :format => 'atom', :as => :api_my_home
-  get 'api/me/contacts' => 'contacts#index', :format => 'json', :as => :api_contacts
-  get 'api/subjects/:s/contacts' => 'contacts#index', :format => 'json', :as => :api_subject_contacts
-  get 'api/user/:id/public' => 'api#activity_atom_feed', :format => 'atom', :as => :api_user_activities
-  ##/API##
+  # ##API###
+  # get 'api/keygen' => 'api#create_key', :as => :api_keygen
+  # get 'api/user/:id' => 'api#users', :as => :api_user
+  # get 'api/me' => 'api#users', :as => :api_me
+  # get 'api/me/home/' => 'api#activity_atom_feed', :format => 'atom', :as => :api_my_home
+  # get 'api/me/contacts' => 'contacts#index', :format => 'json', :as => :api_contacts
+  # get 'api/subjects/:s/contacts' => 'contacts#index', :format => 'json', :as => :api_subject_contacts
+  # get 'api/user/:id/public' => 'api#activity_atom_feed', :format => 'atom', :as => :api_user_activities
+  # ##/API##
 end
