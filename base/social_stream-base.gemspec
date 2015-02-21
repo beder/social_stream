@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   # CRUD controllers
   s.add_runtime_dependency('inherited_resources', '~> 1.5.0')
   # Slug generation
-  s.add_runtime_dependency('stringex', '~> 1.3.0')
+  s.add_runtime_dependency('stringex', '~> 2.5.2')
   # Avatar attachments
   s.add_runtime_dependency('avatars_for_rails', '~> 0.2.0')
   # jQuery
