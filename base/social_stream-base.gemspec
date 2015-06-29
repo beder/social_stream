@@ -65,7 +65,7 @@ Gem::Specification.new do |s|
   # Messages
   s.add_runtime_dependency('mailboxer','~> 0.11.0')
   # Tagging
-  s.add_runtime_dependency('acts-as-taggable-on','~> 2.4.1')
+  s.add_runtime_dependency('acts-as-taggable-on','~> 3.4.2')
   # HTML Forms
   s.add_runtime_dependency('formtastic')
   # Simple navigation for menu
