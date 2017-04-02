@@ -33,9 +33,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('protected_attributes')
   s.add_runtime_dependency('rails-observers')
   s.add_runtime_dependency('rails-perftest')
-  
+
   # Mysql2
-  s.add_runtime_dependency('mysql2')   
+  s.add_runtime_dependency('mysql2')
   # Activity and Relation hierarchies
   s.add_runtime_dependency('ancestry')
   # SQL foreign keys
@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
   # Pagination
   s.add_runtime_dependency('kaminari', '~> 0.15.1')
   # OAuth client Facebook
-  s.add_runtime_dependency('omniauth-facebook','~> 1.4.1')
+  s.add_runtime_dependency('omniauth-facebook','~> 1.6.0')
   # OAuth client Twitter
   s.add_runtime_dependency('omniauth-twitter','~> 1.0.0')
   # OAuth client Linkedin
