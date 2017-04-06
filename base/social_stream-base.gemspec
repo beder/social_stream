@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
   # Pagination
   s.add_runtime_dependency('kaminari', '~> 0.15.1')
   # OAuth client Facebook
-  s.add_runtime_dependency('omniauth-facebook','~> 1.6.0')
+  s.add_runtime_dependency('omniauth-facebook','~> 4.0.0')
   # OAuth client Twitter
   s.add_runtime_dependency('omniauth-twitter','~> 1.0.0')
   # OAuth client Linkedin
